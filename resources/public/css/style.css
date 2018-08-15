@@ -1,0 +1,15 @@
+h1 {
+	color: blue;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.color-peach {
+	background-color: #e08a5c;
+}
+.cat-card {
+    /*height: 100vh;
+    overflow: auto;*/
+}

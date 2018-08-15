@@ -1,10 +1,11 @@
 const express = require('express')
-const path = require('path')
+const app = express()
 const PORT = process.env.PORT || 5000
+const path = require('path')
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.use(express.static("resources/public"))
+app.get('/', (req, res) => res.send('cat blag'))
+app.get('/img/:name', (req,res) =>
+  res.sendFile(path.join(__dirname, "/resources/public/images", req.params.name)))
+
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))

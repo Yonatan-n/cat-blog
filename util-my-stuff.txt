@@ -1,0 +1,4 @@
+cd to resources/public
+then ### browser-sync start --server --files css/*.css js/*.js index.html
+
+run server # node index.js
