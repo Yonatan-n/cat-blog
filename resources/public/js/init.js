@@ -12,7 +12,7 @@ function initPage() {
 
 function importTemplateTo2(temp, to) {
   var root = document.querySelector("header")
-  fetch(temp)
+  fetch(temp, {mozSystem: true})
     .then(x => x.text())
     .then(x => root.innerHTML = x)
 }
