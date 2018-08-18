@@ -6,7 +6,7 @@ function initPage() {
   if ('import' in imported) { // only chrome
     chromeHtmlImport()
   } else { // ajax
-    importTemplateTo2('http://localhost:5000/templates/nav.html', 'header')
+    importTemplateTo2('https://localhost:5000/templates/nav.html', 'header')
   }
 }
 
