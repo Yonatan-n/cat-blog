@@ -18,6 +18,14 @@ ul {
     overflow: auto;*/
 }
 
+.lightly-button {
+	background-color: #e9ecef;
+	color: #495057;
+	border-style: solid;
+	border-width: 21px;
+	border-color: #f8f9fa;
+}
+
 /* Dropdown Button */
 .dropbtn {
 	 background-color: #6c757d;

@@ -14,16 +14,30 @@
   <header></header>
 
   <main class="container-fluid bg-light">
-    <form method="post" enctype="multipart/form-data"
-    class="form-iline">
-  <div>
-    <label for="file">Choose a cat image</label>
-    <input type="file" id="file" name="myFile">
-  </div>
-  <div>
-    <button type="submit" class="btn btn-primary">Send the file</button>
-  </div>
-</form>
+      <form method="post" enctype="multipart/form-data" class="">
+        <div class="form-group">
+          <label for="catName">Cat Name</label>
+          <input type="text" placeholder="Cool Cat Name?" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="catDesc">Cat Description</label>
+          <textarea rows="8" cols="80" placeholder=
+"Where did you find this cat?
+What did it smell like?
+How cool was it?
+Does this cat like lasagna?" class="form-control"></textarea>
+        </div>
+        <div class="form-group input-group mb-3">
+          <div class="input-group-prepend">
+            <label for="file" class="custom-file-label">Choose a cat image</label>
+            <input type="file" name="catPic" class="custom-file-input">
+          </div>
+      </div>
+
+        <div>
+          <button type="submit" class="btn btn-secondary">Send The Form</button>
+        </div>
+      </form>
   </main>
 
   <script type="text/javascript" src="js/templates.js"></script>
