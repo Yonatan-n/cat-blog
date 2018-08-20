@@ -1,18 +1,19 @@
 const imported = document.querySelector("link[rel='import']")// you need to import this before window.onload
 
-window.onload = initPage()
+window.onload = 1 //initPage() you dont need to import with fetch or html import,
+//                  because now you use the html in a javascript file; 'js/templates.js'
 
 function initPage() {
   if ('import' in imported) { // only chrome
     chromeHtmlImport()
   } else { // ajax
-    importTemplateTo2('https://localhost:5000/templates/nav.html', 'header')
+    importTemplateTo2('http://localhost:5000/templates/nav.html', 'header')
   }
 }
 
 function importTemplateTo2(temp, to) {
   var root = document.querySelector("header")
-  fetch(temp, {mozSystem: true})
+  fetch(temp, {mozSystem: true, method: "GET"})
     .then(x => x.text())
     .then(x => root.innerHTML = x)
 }

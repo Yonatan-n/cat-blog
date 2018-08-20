@@ -1,2 +1,2 @@
-//alert("1")
-console.log("upload page!");
+
+console.log("upload js");

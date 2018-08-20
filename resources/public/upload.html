@@ -6,7 +6,7 @@
   <title>Cat Blag</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="import" href="templates/nav.html">
+  <!--<link rel="import" href="templates/nav.html">-->
 </head>
 
 
@@ -14,17 +14,19 @@
   <header></header>
 
   <main class="container-fluid bg-light">
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data"
+    class="form-iline">
   <div>
-    <label for="file">Choose a file</label>
+    <label for="file">Choose a cat image</label>
     <input type="file" id="file" name="myFile">
   </div>
   <div>
-    <button>Send the file</button>
+    <button type="submit" class="btn btn-primary">Send the file</button>
   </div>
 </form>
   </main>
 
+  <script type="text/javascript" src="js/templates.js"></script>
   <script type="text/javascript" src="js/init.js"></script>
   <script type="text/javascript" src="js/upload.js"></script>
 </body>
