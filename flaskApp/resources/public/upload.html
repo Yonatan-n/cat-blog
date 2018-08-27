@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cat Blag</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!--<link rel="import" href="templates/nav.html">-->
+</head>
+
+
+<body>
+  <header></header>
+
+  <main class="container-fluid bg-light">
+    <!--<form action="/upload" method="post">
+      <input type="text" name="catName">
+      <input type="text" name="catDesc">
+      <input type="file" name="catPic" id="catPicId">
+      <input type="submit">
+    </form>-->
+      <form method="post" action="/upload" novalidate>
+        <div class="form-group">
+          <label for="catName">Cat Name</label>
+          <input name="catName"type="text" placeholder="Cool Cat Name?" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="catDesc">Cat Description</label>
+          <textarea rows="8" cols="80" placeholder=
+"Where did you find this cat?
+What did it smell like?
+How cool was it?
+Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
+        </div>
+        <div class="form-group input-group mb-3">
+          <div class="input-group-prepend">
+            <label for="file" class="custom-file-label">Choose a cat image</label>
+            <input type="file" name="catPic" class="custom-file-input">
+          </div>
+      </div>
+
+        <div>
+          <button type="submit" class="btn btn-secondary">Send The Form</button>
+        </div>
+      </form>
+  </main>
+
+  <script type="text/javascript" src="js/templates.js"></script>
+  <script type="text/javascript" src="js/init.js"></script>
+  <script type="text/javascript" src="js/upload.js"></script>
+</body>
+</html>

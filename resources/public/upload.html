@@ -14,30 +14,80 @@
   <header></header>
 
   <main class="container-fluid bg-light">
-      <form method="post" enctype="multipart/form-data" class="">
-        <div class="form-group">
-          <label for="catName">Cat Name</label>
-          <input type="text" placeholder="Cool Cat Name?" class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="catDesc">Cat Description</label>
-          <textarea rows="8" cols="80" placeholder=
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="catName">Cat Name</label>
+        <input name="catName" type="text" placeholder="Poki | Mastik | Elizabet | Nemi | Para | Else" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="catDesc">Cat Description</label>
+        <textarea rows="8" cols="80" placeholder=
 "Where did you find this cat?
 What did it smell like?
 How cool was it?
-Does this cat like lasagna?" class="form-control"></textarea>
-        </div>
-        <div class="form-group input-group mb-3">
-          <div class="input-group-prepend">
-            <label for="file" class="custom-file-label">Choose a cat image</label>
-            <input type="file" name="catPic" class="custom-file-input">
-          </div>
+Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
       </div>
-
-        <div>
+        <div class="custom-file input-group-prepend form-group">
+          <label for="file" class="custom-file-label">Choose a cat image</label>
+          <input type="file" name="catPic" class="custom-file-input" style="padding: 2.2em 0;">
+        </div>
+        <div class="form group jumbotron">
+          <h5>Choose a color for the cat</h5>
+          <hr class="my-4">
+          <div class="radio">
+            <label><input type="radio" name="catColor" value="Tricolor" checked>Tricolor</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="catColor" value="Black">Black</label>
+          </div>
+          <div class="radio">
+              <label><input type="radio" name="catColor" value="white">white</label>
+          </div>
+          <div class="radio">
+              <label><input type="radio" name="catColor" value="Black & White">Black &amp; white</label>
+          </div>
+          <div class="radio">
+              <label><input type="radio" name="catColor" value="Ginger">Ginger</label>
+          </div>
+          <div class="radio">
+              <label><input type="radio" name="catColor" value="Unique">Unique</label>
+          </div>
+        </div>
+        <!--end of color, start of tag-->
+        <div class="form group jumbotron">
+            <h5>Choose some tags for the cat</h5>
+            <hr class="my-4">
+            <div class="checkbox">
+              <label><input type="checkbox" name="catTag" value="Fat">Fat</label>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="catTag" value="Kitten">Kitten</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="catTag" value="Dog?!">Dog?!</label>
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="catTag" value="Special Breed">Special Breed</label>
+            </div>
+          </div>
+        <!--<div class="form-group">
+                <select class="custom-select" required>
+                  <option value="0">Tricolor</option>
+                  <option value="1">Black</option>
+                  <option value="2">White</option>
+                  <option value="3">Ginger</option>
+                  <option value="4">Black &amp; White</option>
+                  <option value="5">Unique</option>
+                </select>
+        </div>-->
+        <div class="form-group">
+          <input type="password" name="password" id="pass">
+        </div>
+        <div class="form-group mx-auto text-center">  
           <button type="submit" class="btn btn-secondary">Send The Form</button>
         </div>
-      </form>
+      </div>
+    </form>
   </main>
 
   <script type="text/javascript" src="js/templates.js"></script>
