@@ -138,7 +138,7 @@ app.post('/upload', (req, res) => {
         //imgPath: `./resources/postedCats/${req.file.filename}`,
         //color: catBody.catColor
      // })
-      console.log(aCatForm)
+      //console.log(aCatForm)
       /* aCatForm.save((err, cat) => {
         if (err) throw err
         console.log(`inserted ${cat} to the database!`)
