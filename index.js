@@ -3,30 +3,30 @@ const app = express()
 const path = require('path')
 const fs = require('fs');
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
+//const mongoose = require('mongoose')
 const multer = require('multer')
-const Binary = require('mongodb').Binary
+//const Binary = require('mongodb').Binary
 const PORT = process.env.PORT || 5000
 
-const uristring =  process.env.MONGOLAB_URI ||
+/* const uristring =  process.env.MONGOLAB_URI ||
                    process.env.MONGOHQ_URL ||
-                   'mongodb://127.0.0.1:27017'
+                   'mongodb://127.0.0.1:27017' */
 const p2f = "resources/public"
 const password = "catscatscats"
 const urlencodedParser = bodyParser.urlencoded({ extended: true })
 
-const catScheme = new mongoose.Schema({
+/* const catScheme = new mongoose.Schema({
   name: String, // check if name in the popular cats set
-  desc: String, // nothing
-  imgPath: String, // load the image from disk
-  color: String, // check if length more then 0, if so, use tags
+  //desc: String, // nothing
+  //imgPath: String, // load the image from disk
+  //color: String, // check if length more then 0, if so, use tags
   //tags: Array
-})
+}) */
 //popCat = ['Poki', 'Mastik', 'Elizabet', 'Nemi', 'Para']
 //catsTag = ['Kitten', 'Dog?!', 'Fat', 'Special Breed']
 //color = ["tri-color", "black & white", "black", 'white', 'ginger']
-var catForm = mongoose.model('catForm', catScheme)
-module.exports = catForm
+/* var catForm = mongoose.model('catForm', catScheme)
+module.exports = catForm */
 
 function logThisTime(date) {
     const dStr = date.toDateString()
@@ -38,7 +38,7 @@ function logThisTime(date) {
 app.use(express.static(p2f))
 app.use(bodyParser.urlencoded({ extended: true}))
 //app.use(bodyParser.json())
-app.use((req, res, next) => {
+app.use((req, res, next) => { //simple requests logger
   console.log(`got ${req.method} request at ${req.url}`)
   next()
 })
@@ -62,7 +62,7 @@ app.get('/img/:name', (req,res) =>
   res.sendFile(path.join(__dirname, "/resources/public/images", req.params.name)))
 
 app.get('/catPIC', (req, res) => {
-  mongoose.connect(uristring)
+ /*  mongoose.connect(uristring)
   const db = mongoose.connection
   db.on('error', console.error.bind(console, 'connection error: '))
   db.once('open', () => {
@@ -70,18 +70,18 @@ app.get('/catPIC', (req, res) => {
       if (err) return console.error(err)
       console.log(cat)
     })
-  })
+  }) */
 })
 app.get('/maCats', (req, res) => {
-  mongoose.connect(uristring)
+ /*  mongoose.connect(uristring)
   const db = mongoose.connection
   db.on('error', console.error.bind(console, 'connection error: '))
   db.once('open', () => {
     catForm.find({}, (err, cat) => {
       if (err) return console.error(err)
-      res.send(cat[0])
+      res.send(cat)
     })
-  })
+  }) */
 })
 const storage = multer.diskStorage({
   destination: './resources/postedCats/',
@@ -108,8 +108,8 @@ function checkFileType(file, cb){
 }
 app.post('/upload', (req, res) => {
   console.log(res.body)
-  mongoose.connect(uristring)
-  const db = mongoose.connection
+  //mongoose.connect(uristring)
+  //const db = mongoose.connection
   /* db.once('open', () => {
     const aCatForm = new catForm({name: req.body.catName, desc: req.body.catDesc, img: req.file})
     aCatForm.save((err, cat) => {
@@ -132,17 +132,17 @@ app.post('/upload', (req, res) => {
       console.log("\n\n\nBODYHERE\n\n\n")
       //const {catName, catDesc, catColor, catTag, password} = catBody
       //console.log(`cat NAME IS ${catName}`)
-      const aCatForm = new catForm({
-        name: catBody.catName,
-        desc: catBody.catDesc,
-        imgPath: `./resources/postedCats/${req.file.filename}`,
-        color: catBody.catColor
-      })
+      //const aCatForm = new catForm({
+       // "name": catBody["catName"],
+        //desc: catBody.catDesc,
+        //imgPath: `./resources/postedCats/${req.file.filename}`,
+        //color: catBody.catColor
+     // })
       console.log(aCatForm)
-      aCatForm.save((err, cat) => {
+      /* aCatForm.save((err, cat) => {
         if (err) throw err
         console.log(`inserted ${cat} to the database!`)
-      })
+      }) */
         /* fs.readFile(`./resources/postedCats/${req.file.filename}`, (err, imgFromDisk) => {
           if (err) throw err
           

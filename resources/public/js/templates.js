@@ -5,7 +5,7 @@ const tempNavBar =  `
       <h3 class="text-center" id="page-title">cat blag</h3>
     </div>
 
-    <nav class="navbar navbar-expand-sm bg-secondary" id="nav-bar">
+    <nav class="navbar navbar-expand-sm color-bg" id="nav-bar">
       <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link text-white hoverNav" href="home">Home Feed</a>

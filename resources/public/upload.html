@@ -15,12 +15,14 @@
 
   <main class="container-fluid bg-light">
     <form action="/upload" method="post" enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="catName">Cat Name</label>
-        <input name="catName" type="text" placeholder="Poki | Mastik | Elizabet | Nemi | Para | Else" class="form-control">
+      <div class="form-group jumbotron">
+        <h5>Cat Name</h5>
+        <hr class="my-4">
+        <input name="catName" type="text" placeholder="Poki | Mastik | Elizabet | Nemi | Para" class="form-control">
       </div>
-      <div class="form-group">
-        <label for="catDesc">Cat Description</label>
+      <div class="form-group jumbotron">
+        <h5>Cat Description</h5>
+        <hr class="my-4">
         <textarea rows="8" cols="80" placeholder=
 "Where did you find this cat?
 What did it smell like?
@@ -28,7 +30,7 @@ How cool was it?
 Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
       </div>
         <div class="custom-file input-group-prepend form-group">
-          <label for="file" class="custom-file-label">Choose a cat image</label>
+          <label for="catPic" class="custom-file-label">Choose a cat image</label>
           <input type="file" name="catPic" class="custom-file-input" style="padding: 2.2em 0;">
         </div>
         <div class="form group jumbotron">
@@ -80,7 +82,9 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
                   <option value="5">Unique</option>
                 </select>
         </div>-->
-        <div class="form-group">
+        <div class="form-group jumbotron">
+          <h5>Super secret password</h5>
+          <hr class="my-4">
           <input type="password" name="password" id="pass">
         </div>
         <div class="form-group mx-auto text-center">  

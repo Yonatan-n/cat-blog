@@ -6,13 +6,22 @@ ul {
 	list-style-type: none;
 }
 
+@media only screen and (min-width : 240px) {
+	/* h5 {
+		color: aqua;
+		color: black;
+	} */
+}
 
 .hoverNav:hover {
-	background-color: #e08a5c;
+	background-color: #f29e91;
 }
 
 .color-peach {
-	background-color: #e08a5c;
+	background-color: #f29e91;
+}
+.color-bg {
+	background-color: #423939;
 }
 .cat-card {
     /*height: 100vh;
@@ -29,7 +38,7 @@ ul {
 
 /* Dropdown Button */
 .dropbtn {
-	 background-color: #6c757d;
+	 background-color: #423939;
 	 color: white;
 	 padding: 0px;
 	 font-size: 16px;
@@ -46,7 +55,7 @@ ul {
 .dropdown-content {
 	 display: none;
 	 position: absolute;
-	 background-color: #6c757d;
+	 background-color: #423939;
 	 min-width: 160px;
 	 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
 	 z-index: 1;
@@ -61,10 +70,10 @@ ul {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #e08a5c;}
+.dropdown-content a:hover {background-color: #f29e91;}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #e08a5c;}
+.dropdown:hover .dropbtn {background-color: #f29e91;}
