@@ -19,36 +19,15 @@ const p2f = "resources/public"
 const password = "catscatscats"
 const urlencodedParser = bodyParser.urlencoded({ extended: true })
 
-
 // my util functions
 function makeTimeString(date) {
     const dStr = date.toDateString()
     const dTime = date.toTimeString().split(' ')[0]
     return `${dStr} -> ${dTime}`
 }
-insertNewCat = async () => {
-  const sql = "insert into cats_table (name, description, color, tags, img_path) VALUES ('quack_!quack', 'not a fucking normal cat, get lost normies', 'ginger', 'skinny', './dev/null/thing2' )"
-  console.log('starts')
-  try {
-    const client = await pool.connect()
-    const result = await client.query(sql);
-    console.log(result.rows)
-    client.release();
-  } catch (err) {
-    console.error(err);
-  }
-}
-selectAllCats = async () => {
-  console.log('starts')
-  try {
-    const client = await pool.connect()
-    const result = await client.query('SELECT * FROM cats_table');
-    console.log(result.rows)
-    client.release();
-  } catch (err) {
-    console.error(err);
-  }
-}
+
+//executeSqlPromise = (sql)
+
 executeSql = async (sql) => {
   console.log('starts sql query')
   try {
@@ -60,8 +39,9 @@ executeSql = async (sql) => {
     console.error(err)
   }
 }
-
+// you need to make a res.send out put to the executeSql
 // my util functions
+
 app.use(express.static(p2f))
 app.use(bodyParser.urlencoded({ extended: true}))
 //app.use(bodyParser.json())
@@ -85,23 +65,16 @@ app.get('/search', (req, res) =>
   res.sendFile(path.join(__dirname, p2f, "search.html")))
 
 //api stuff
-app.get('/img/:name', (req,res) =>
+app.get('/api/img/:name', (req,res) =>
   res.sendFile(path.join(__dirname, "/resources/public/images", req.params.name)))
 
-app.get('/catPIC', (req, res) => {
-  selectAllCats()
+app.get('/api/all', (req, res) => {
+  //executeSql("select * FROM cat_table")
+  pool.query(`SELECT * FROM cat_table`)
+    .then(result => res.send(result.rows))
+    .catch(e => setImmediate(() => {throw e}))
 })
-app.get('/maCats', (req, res) => {
- /*  mongoose.connect(uristring)
-  const db = mongoose.connection
-  db.on('error', console.error.bind(console, 'connection error: '))
-  db.once('open', () => {
-    catForm.find({}, (err, cat) => {
-      if (err) return console.error(err)
-      res.send(cat)
-    })
-  }) */
-})
+
 const storage = multer.diskStorage({
   destination: './resources/postedCats/',
   filename: function(req, file, cb){
@@ -111,7 +84,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits:{fileSize: 10000000},
-  fileFilter: function(req, file, cb){
+  fileFilter: function(req, file, cb) {
     checkFileType(file, cb);
   }
 }).single('catPic');
@@ -132,16 +105,23 @@ app.post('/upload', (req, res) => {
     } else if(req.file === undefined){
         res.send('No fuckin file!')
     } else {
-      cat = JSON.parse(JSON.stringify(req.body)) // format cat body so you can use it
-      pathToImg = path.join(__dirname,'resources','postedCats',req.file.filename)
-      const sql = `insert into cats_table 
+      const cat = JSON.parse(JSON.stringify(req.body)) // format cat body so you can use it
+      if (cat.password !== password) {
+        return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
+      }
+      const pathToImg = path.join(__dirname,'resources','postedCats',req.file.filename)
+      const sql = `insert into cat_table 
       (name, description, color, tags, img_path)
        VALUES 
-       ('${cat.catName}', '${cat.catDesc}', '${cat.catColor}', '${cat.catTag}', '${pathToImg}')`
-      //executeSql(sql)
-        console.log(`test: ${cat["catName"]}`)
-        console.log(`cat BODY: ${cat}.\n\ncat file ${req.file.filename}\n\nsql => ${sql}`)
-        res.sendFile(pathToImg)
+       ('${cat.catName}',
+        '${cat.catDesc}',
+        '${cat.catColor}',
+        '${cat.catTag}',
+        '${pathToImg}')`
+      executeSql(sql, console.log)
+        //console.log(`test: ${cat["catName"]}`)
+        //console.log(`cat BODY: ${JSON.stringify(cat)}.\n\ncat file ${req.file.filename}\n\nsql => ${sql}`)
+      res.sendFile(pathToImg)
       }
   })
 })

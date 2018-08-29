@@ -1,0 +1,28 @@
+CREATE TABLE cat_table(
+               id SMALLSERIAL PRIMARY KEY,
+               name TEXT NOT NULL,
+               DESCRIPTION TEXT NOT NULL,
+               COLOR TEXT NOT NULL,
+               tags text default null,
+               img_path text not null,
+               up_date DATE DEFAULT CURRENT_DATE
+               );
+
+cat_blag=# create TABLE cats_data(
+ID INT PRIMARY KEY    NOT NULL,
+NAME           TEXT   NOT NULL,
+DESCRIPTION    TEXT   NOT NULL,
+COLOR          TEXT   NOT NULL,
+TAGS           TEXT DEFAULT NULL,
+IMG_PATH       TEXT   NOT NULL,
+create_date    DATE   DEFAULT CURRENT_DATE
+);
+
+
+
+SELECT CURRENT_DATE
+SELECT CURRENT_TIME
+
+create table cats_w_id(
+cat_blag(# id smallint NOT NULL DEFAULT nextval('cat_id_testing'),
+cat_blag(# name text not null);

@@ -1,7 +1,7 @@
 ## Running Locally
 
 
-Make sure you have [Node.js](http://nodejs.org/), [npm](https://www.npmjs.com/) and [MongoDB](https://www.mongodb.com/) installed.
+Make sure you have [Node.js](http://nodejs.org/), [npm](https://www.npmjs.com/) and [Postgresql](https://www.postgresql.org) installed.
 
 ```sh
 $ git clone https://github.com/Yonatan-n/cat-blag
@@ -26,6 +26,9 @@ or
 ## Documentation
 
 /home -> is the home page (or /)
+
 /upload -> is an upload page form
+
 /catPIC -> query the DB for all the cats
+
 that's it for now.
