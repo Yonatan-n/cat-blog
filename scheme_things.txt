@@ -7,7 +7,27 @@ CREATE TABLE cat_table(
                img_path text not null,
                up_date DATE DEFAULT CURRENT_DATE
                );
+               
+CREATE TABLE cat_table(
+               id SMALLSERIAL PRIMARY KEY,
+               name TEXT NOT NULL,
+               DESCRIPTION TEXT NOT NULL,
+               COLOR TEXT NOT NULL,
+               tags text default null,
+               img_path text not null,
+               up_date DATE DEFAULT CURRENT_DATE);
 
++-------------+----------+---------------------------------------------------------+
+| Column      | Type     | Modifiers                                               |
+|-------------+----------+---------------------------------------------------------|
+| id          | smallint |  not null default nextval('cat_table_id_seq'::regclass) |
+| name        | text     |  not null                                               |
+| description | text     |  not null                                               |
+| color       | text     |  not null                                               |
+| tags        | text     |                                                         |
+| img_path    | text     |  not null                                               |
+| up_date     | date     |  default CURRENT_DATE                                   |
++-------------+----------+---------------------------------------------------------+
 cat_blag=# create TABLE cats_data(
 ID INT PRIMARY KEY    NOT NULL,
 NAME           TEXT   NOT NULL,

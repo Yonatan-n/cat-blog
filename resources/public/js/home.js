@@ -1,4 +1,4 @@
-const xs = [
+ const xs = [
   {name: "coolCat", desc: "this is a wicked cat! watch out boys!", img: "images/cat1.jpg"},
   {name: "neat kit", desc: "this is a neat little kitty", img: "images/cat2.jpg"},
   {name: "Cat", desc: "just a reguler 'Ol CAT'", img: "images/cat3.jpg"},
@@ -6,7 +6,9 @@ const xs = [
   {name: "Cat", desc: "just a reguler 'Ol CAT'", img: "images/cat5.jpg"}
 ]
 
-window.onload = makeCatList3(xs, "#catList")
+
+
+
 function makeCatList1() {
     const daList = document.getElementById('imgls')
     catCardTemplate = (x) => `
@@ -39,13 +41,13 @@ function changeCatPic() {
     .then((x) => img.src = URL.createObjectURL(x))
 }
 
-function createCatCard(name, desc, imgPath) {
+function createCatCard(name, desc, imgPath, up_date) {
   let catCard = document.createElement("div")
   catCard.className = "card"
   let cardBody = document.createElement("div")
   cardBody.className = "card-body"
   let img = document.createElement("img")
-  img.src = imgPath
+  img.src = `${baseURL}/api/img/${imgPath}`
   img.alt = "cat pic"
   img.className = "card-img-top d-block"
   let cardTitle = document.createElement("h5")
@@ -54,8 +56,14 @@ function createCatCard(name, desc, imgPath) {
   let cardDesc = document.createElement('p')
   cardDesc.className = "card-text"
   cardDesc.innerText = desc
+  let catDate = document.createElement('p')
+  catDate.className = "card-text"
+  makeFormatDate = (d) => d.slice(0, 10).split("-").reverse().join("-")
+  catDate.innerText = makeFormatDate(up_date)
+  catDate.style.fontSize = "0.7em"
+  //<p class="card-text" id='catDate' style="font-size: 0.9em;">29-08-2018</p>
   // end of def
-  cardBody.append(img, cardTitle, cardDesc)
+  cardBody.append(img, cardTitle, cardDesc, catDate)
   catCard.appendChild(cardBody)
   return catCard
 }
@@ -63,9 +71,14 @@ function appendCatList(xs, to) {
   document.querySelector(to).append(xs)
 }
 
-function makeCatList3(xs, to) {
+function makeCatList3(url, to) {
   const parent = document.querySelector(to)
-  const ls = xs.forEach(x =>
-    parent.append(
-    createCatCard(x.name, x.desc, x.img)))
+  fetch(url)
+    .then(a => a.json())
+    .then(xs => xs.reverse().forEach(x =>
+      parent.append(
+      createCatCard(x.name, x.description, x.img_path, x.up_date))))
 }
+
+const baseURL = `${window.location.protocol}//${window.location.host}`
+window.onload = makeCatList3(`${baseURL}/api/all`, "#catList")

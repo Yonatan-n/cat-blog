@@ -10,3 +10,6 @@ npm-debug.log
 # Docker
 Dockerfile
 docker-compose.yml
+
+#don't include the test images
+resources/public/images/

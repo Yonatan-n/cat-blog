@@ -13,10 +13,14 @@ const { Pool } = require('pg');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || "postgres://vrfxhodtqyfprc:36b401c890699b83a74f92c4cebd21c29de6dbcbaac7fbab0865ee2b9bafcd4c@ec2-50-16-196-57.compute-1.amazonaws.com:5432/d6v73t2rti2ka",
   ssl: true
-});
+})
+pool.on('error', (err, client) => {
+  console.error('(postgres pooling error) Unexpected error on idle client', err)
+  process.exit(-1)
+})
 // Heroku Postgresql
-const p2f = "resources/public"
-const password = "catscatscats"
+const pathToPublic = `${__dirname}/resources/public`
+const password = "dishwasherunderwear" // dish washer under wear
 const urlencodedParser = bodyParser.urlencoded({ extended: true })
 
 // my util functions
@@ -27,8 +31,13 @@ function makeTimeString(date) {
 }
 
 //executeSqlPromise = (sql)
+executeSql = (sql) =>
+  pool.query(sql, (err, result) => {
+    if (err) throw err
+    return(result.rows)
+  })
 
-executeSql = async (sql) => {
+executeSqlLog = async (sql) => {
   console.log('starts sql query')
   try {
     const client = await pool.connect()
@@ -42,7 +51,7 @@ executeSql = async (sql) => {
 // you need to make a res.send out put to the executeSql
 // my util functions
 
-app.use(express.static(p2f))
+app.use(express.static(pathToPublic))
 app.use(bodyParser.urlencoded({ extended: true}))
 //app.use(bodyParser.json())
 app.use((req, res, next) => { //simple requests logger
@@ -56,29 +65,36 @@ app.get('/', (req, res) =>
   res.redirect('/home')) //(path.join(__dirname, p2f, "index.html")))
 
 app.get('/home', (req, res) =>
-  res.sendFile(path.join(__dirname, p2f, "index.html")))
+  res.sendFile(path.join(pathToPublic, "index.html")))
 
 app.get('/upload', (req, res) =>
-  res.sendFile(path.join(__dirname, p2f, "upload.html")))
+  res.sendFile(path.join(pathToPublic, "upload.html")))
 
 app.get('/search', (req, res) =>
-  res.sendFile(path.join(__dirname, p2f, "search.html")))
+  res.sendFile(path.join(pathToPublic, "search.html")))
 
 //api stuff
-app.get('/api/img/:name', (req,res) =>
+app.get('/api/img1/:name', (req,res) => // old
   res.sendFile(path.join(__dirname, "/resources/public/images", req.params.name)))
 
-app.get('/api/all', (req, res) => {
-  //executeSql("select * FROM cat_table")
-  pool.query(`SELECT * FROM cat_table`)
-    .then(result => res.send(result.rows))
-    .catch(e => setImmediate(() => {throw e}))
-})
+app.get('/api/img/:img', (req, res) =>
+  //res.send(req.params.filePath))
+  res.sendFile(path.join(__dirname, `resources/postedCats` ,req.params.img)))
 
+app.get('/api/all', (req, res) =>
+  pool.query(`SELECT * FROM cat_table`, (err, result) => {
+    if (err) throw err
+    res.send(result.rows)
+  }))
+
+const makeDateStr = (d) => `${d.toDateString().replace(/ /g, "-")}-${(d.toTimeString()).slice(0,8)}`
+// makeDateStr :: Date -> String
+// looks like this -> 'Thu-Aug-30-2018-11:40:08'
+// so the files will be CatName-Thu-Aug-30-2018-11:40:08.png
 const storage = multer.diskStorage({
   destination: './resources/postedCats/',
   filename: function(req, file, cb){
-    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    cb(null,`${file.fieldname}-${makeDateStr(new Date)}${path.extname(file.originalname)}`);
   }
 })
 const upload = multer({
@@ -109,19 +125,16 @@ app.post('/upload', (req, res) => {
       if (cat.password !== password) {
         return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
       }
-      const pathToImg = path.join(__dirname,'resources','postedCats',req.file.filename)
-      const sql = `insert into cat_table 
+      const imgName = req.file.filename
+      const text = `insert into cat_table 
       (name, description, color, tags, img_path)
-       VALUES 
-       ('${cat.catName}',
-        '${cat.catDesc}',
-        '${cat.catColor}',
-        '${cat.catTag}',
-        '${pathToImg}')`
-      executeSql(sql, console.log)
-        //console.log(`test: ${cat["catName"]}`)
-        //console.log(`cat BODY: ${JSON.stringify(cat)}.\n\ncat file ${req.file.filename}\n\nsql => ${sql}`)
-      res.sendFile(pathToImg)
+       VALUES ($1,$2,$3,$4,$5)`
+       const values = [cat.catName, cat.catDesc, cat.catColor, cat.catTag, imgName]      
+        pool.query(text, values, (err, result) => {
+          if (err) throw err
+          console.log(result.rows)
+        })
+        res.redirect("/home")
       }
   })
 })
