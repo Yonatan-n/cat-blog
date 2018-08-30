@@ -87,6 +87,8 @@ app.get('/api/all', (req, res) =>
     res.send(result.rows)
   }))
 
+app.get('/api/Dir', (req, res) => res.send(__dirname))
+
 const makeDateStr = (d) => `${d.toDateString().replace(/ /g, "-")}-${(d.toTimeString()).slice(0,8)}`
 // makeDateStr :: Date -> String
 // looks like this -> 'Thu-Aug-30-2018-11:40:08'

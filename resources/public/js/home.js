@@ -1,13 +1,3 @@
- const xs = [
-  {name: "coolCat", desc: "this is a wicked cat! watch out boys!", img: "images/cat1.jpg"},
-  {name: "neat kit", desc: "this is a neat little kitty", img: "images/cat2.jpg"},
-  {name: "Cat", desc: "just a reguler 'Ol CAT'", img: "images/cat3.jpg"},
-  {name: "Cat", desc: "just a reguler 'Ol CAT'", img: "images/cat4.jpg"},
-  {name: "Cat", desc: "just a reguler 'Ol CAT'", img: "images/cat5.jpg"}
-]
-
-
-
 
 function makeCatList1() {
     const daList = document.getElementById('imgls')
