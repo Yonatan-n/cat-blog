@@ -3,10 +3,18 @@ const app = express()
 const path = require('path')
 const fs = require('fs');
 const bodyParser = require('body-parser')
-//const mongoose = require('mongoose')
 const multer = require('multer')
-const multers3 = require('multer-s3')
-//const Binary = require('mongodb').Binary
+const multerS3 = require('multer-s3')
+const AWS = require("aws-sdk")
+
+const awsConfig = {
+  "region": "us-east-1",
+  "accessKeyId": "AKIAJK7GQWEBTS2SK3AQ",
+  "secretAccessKey":"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"
+}
+AWS.config.update(awsConfig)
+
+const s3 = new AWS.S3
 const PORT = process.env.PORT || 5000
 
 // Heroku Postgresql
@@ -55,8 +63,12 @@ executeSqlLog = async (sql) => {
 app.use(express.static(pathToPublic))
 app.use(bodyParser.urlencoded({ extended: true}))
 //app.use(bodyParser.json())
+app.use((req, res, next) => {
+  req.reqTime = new Date
+  next()
+})
 app.use((req, res, next) => { //simple requests logger
-  console.log(`got ${req.method} request at ${req.url}`)
+  console.log(`got ${req.method} request at ${req.url}\non: ${req.reqTime}`)
   next()
 })
 
@@ -88,12 +100,19 @@ app.get('/api/all', (req, res) =>
     res.send(result.rows)
   }))
 
-app.get('/api/fs', (req, res) => 
-  pool.query(`select * FROM fs_test`, (err, result) => {
+/* s3.getObject({
+  Bucket: "cat-blag-bucket",
+  Key: "cat-blag-s3/catPic-Sun-Sep-02-2018-09:50:16.jpg"
+}, (err, data) => {
+  if (err) throw err
+  console.log(data.Body.toString())
+}) */
+app.get('/api/s3Ls', (req, res) => {
+  s3.listObjectsV2({Bucket: 'cat-blag-bucket'}, (err, data) => {
     if (err) throw err
-    res.send(result.rows)
-}))
-
+    console.log(`all good s3 mann\n${JSON.stringify(data.Contents[4].Key)}`)
+  })
+})
 
 app.get('/api/Dir', (req, res) => res.send(__dirname))
 
@@ -101,19 +120,23 @@ const makeDateStr = (d) => `${d.toDateString().replace(/ /g, "-")}-${(d.toTimeSt
 // makeDateStr :: Date -> String
 // looks like this -> 'Thu-Aug-30-2018-11:40:08'
 // so the files will be CatName-Thu-Aug-30-2018-11:40:08.png
-const storage = multer.diskStorage({
-  destination: './resources/postedCats/',
-  filename: function(req, file, cb){
-    cb(null,`${file.fieldname}-${makeDateStr(new Date)}${path.extname(file.originalname)}`);
-  }
+
+var upload = multer({
+  fileFilter: (req, file, cb) => checkFileType(file, cb),
+  storage: multerS3({
+    s3: s3,
+    bucket: 'cat-blag-bucket',
+    metadata: function (req, file, cb) {
+      cb(null, {
+        fieldName: file.fieldname
+      });
+    },
+    key: function (req, file, cb) {
+      cb(null, `cat-blag-s3/${file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(file.originalname)}`)
+    }
+  })
 })
-const upload = multer({
-  storage: storage,
-  limits:{fileSize: 10000000},
-  fileFilter: function(req, file, cb) {
-    checkFileType(file, cb);
-  }
-}).single('catPic');
+const makeExt = (s) => s.slice(s.lastIndexOf('.'))
 function checkFileType(file, cb){
   const filetypes = /jpeg|jpg|png|gif/; // Allowed ext
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase()); // Check ext
@@ -124,37 +147,25 @@ function checkFileType(file, cb){
     cb('Error: Images Only!');
   }
 }
-app.post('/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if(err){
-      res.send("Error!: " + err);
-    } else if(req.file === undefined){
+app.post('/upload', upload.single('catPic'), (req, res) => {  
+     if(req.file === undefined){
         res.send('No fuckin file!')
     } else {
       const cat = JSON.parse(JSON.stringify(req.body)) // format cat body so you can use it
       if (cat.password !== password) {
         return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
       }
-      //const imgName = req.file.filename
-      const text = `insert into fs_test 
-      (name, fileblob)
-       VALUES ($1,$2)` // ,$3,$4,$5
-      fs.readFile(path.join(__dirname, 'resources', 'postedCats', req.file.filename), (err, data) => {
-        if (err) throw err
-          const values = [cat.catName/*, cat.catDesc, cat.catColor, cat.catTag*/, data]      
+      res.redirect("/upload")      
+      const text = `insert into cat_table_s3 
+      (NAME,DESCRIPTION,COLOR,TAGS,file_name)
+      VALUES ($1,$2,$3,$4,$5)`
+      const values = [cat.catName, cat.catDesc, cat.catColor, cat.catTag,
+        `cat-blag-s3/${req.file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(req.file.originalname)}`]      
           pool.query(text, values, (err, result) => {
             if (err) throw err
-            console.log(result.rows) // OK, so what you gonna do is this:
-            //                       use multer to save a pic "catPic.jpg" (?)
-            //                       to the filesystem and then, read it with fs
-            //                       and insert it to the heroku DB, once you got that
-            //                       going, switch to the AWS DB,
-            //                       then you could move on and make some ui changes adn so on
+            console.log(result.rows, `Also the date is: ${req.reqTime}`,`Values are: ${values}`) // OK, so what you gonna do is this:
           })
-      })
-      res.redirect("/home")      
       }
-  })
 })
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))
