@@ -32,12 +32,13 @@ function changeCatPic() {
 }
 
 function createCatCard(name, desc, imgPath, up_date) {
+  console.log(imgPath)
   let catCard = document.createElement("div")
   catCard.className = "card"
   let cardBody = document.createElement("div")
   cardBody.className = "card-body"
   let img = document.createElement("img")
-  img.src = `${baseURL}/api/img/${imgPath}`
+  img.src = imgPath
   img.alt = "cat pic"
   img.className = "card-img-top d-block"
   let cardTitle = document.createElement("h5")
@@ -67,7 +68,7 @@ function makeCatList3(url, to) {
     .then(a => a.json())
     .then(xs => xs.reverse().forEach(x =>
       parent.append(
-      createCatCard(x.name, x.description, x.img_path, x.up_date))))
+      createCatCard(x.name, x.description, x.file_name, x.up_date))))
 }
 
 const baseURL = `${window.location.protocol}//${window.location.host}`

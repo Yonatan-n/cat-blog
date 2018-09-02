@@ -95,7 +95,7 @@ app.get('/api/img/:img', (req, res) =>
   res.sendFile(path.join(__dirname, `resources/postedCats` ,req.params.img)))
 
 app.get('/api/all', (req, res) =>
-  pool.query(`SELECT * FROM cat_table`, (err, result) => {
+  pool.query(`SELECT * FROM cat_table_s3`, (err, result) => {
     if (err) throw err
     res.send(result.rows)
   }))
@@ -126,6 +126,7 @@ var upload = multer({
   storage: multerS3({
     s3: s3,
     bucket: 'cat-blag-bucket',
+    acl: 'public-read',
     metadata: function (req, file, cb) {
       cb(null, {
         fieldName: file.fieldname
@@ -155,15 +156,16 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
       if (cat.password !== password) {
         return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
       }
-      res.redirect("/upload")      
+      res.redirect("/home")      
       const text = `insert into cat_table_s3 
       (NAME,DESCRIPTION,COLOR,TAGS,file_name)
       VALUES ($1,$2,$3,$4,$5)`
       const values = [cat.catName, cat.catDesc, cat.catColor, cat.catTag,
-        `cat-blag-s3/${req.file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(req.file.originalname)}`]      
+        //https://s3.amazonaws.com/cat-blag-bucket/cat-blag-s3/catPic-Sun-Sep-02-2018-19:19:04.jpg
+         `https://s3.amazonaws.com/cat-blag-bucket/cat-blag-s3/${req.file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(req.file.originalname)}`]      
           pool.query(text, values, (err, result) => {
             if (err) throw err
-            console.log(result.rows, `Also the date is: ${req.reqTime}`,`Values are: ${values}`) // OK, so what you gonna do is this:
+            //console.log(result.rows, `Also the date is: ${req.reqTime}`,`Values are: ${values}`) // OK, so what you gonna do is this:
           })
       }
 })
