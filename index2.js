@@ -9,8 +9,8 @@ const AWS = require("aws-sdk")
 
 const awsConfig = {
   "region": "us-east-1",
-  "accessKeyId": "AKIAJ7A2XOBNLOKRZ6MA",
-  "secretAccessKey":"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"
+  "accessKeyId": "AKIAJK7GQWEBTS2SK3AQ",
+  "secretAccessKey":"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"
 }
 AWS.config.update(awsConfig)
 
@@ -63,8 +63,12 @@ executeSqlLog = async (sql) => {
 app.use(express.static(pathToPublic))
 app.use(bodyParser.urlencoded({ extended: true}))
 //app.use(bodyParser.json())
+app.use((req, res, next) => {
+  req.reqTime = new Date
+  next()
+})
 app.use((req, res, next) => { //simple requests logger
-  console.log(`got ${req.method} request at ${req.url}`)
+  console.log(`got ${req.method} request at ${req.url}\non: ${req.reqTime}`)
   next()
 })
 
@@ -128,7 +132,7 @@ var upload = multer({
       });
     },
     key: function (req, file, cb) {
-      cb(null, `cat-blag-s3/${file.fieldname}-${makeDateStr(new Date)}${makeExt(file.originalname)}`)
+      cb(null, `cat-blag-s3/${file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(file.originalname)}`)
     }
   })
 })
@@ -151,14 +155,15 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
       if (cat.password !== password) {
         return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
       }
-      res.redirect("/home")      
+      res.redirect("/upload")      
       const text = `insert into cat_table_s3 
       (NAME,DESCRIPTION,COLOR,TAGS,file_name)
       VALUES ($1,$2,$3,$4,$5)`
-      const values = [cat.catName, cat.catDesc, cat.catColor, cat.catTag, s3_name/* req.file.fieldname */]      
+      const values = [cat.catName, cat.catDesc, cat.catColor, cat.catTag,
+        `cat-blag-s3/${req.file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(req.file.originalname)}`]      
           pool.query(text, values, (err, result) => {
             if (err) throw err
-            console.log(result.rows) // OK, so what you gonna do is this:
+            console.log(result.rows, `Also the date is: ${req.reqTime}`,`Values are: ${values}`) // OK, so what you gonna do is this:
           })
       }
 })
