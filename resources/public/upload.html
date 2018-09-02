@@ -30,10 +30,16 @@ What did it smell like?
 How cool was it?
 Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
       </div>
-        <div class="custom-file input-group-prepend form-group">
+      
+        <div class="custom-file form-group">
           <label for="catPic" class="custom-file-label">Choose a cat image</label>
-          <input type="file" name="catPic" class="custom-file-input" style="padding: 2.2em 0;">
+          <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;">
         </div>
+       <!--  <input id="uploadFile" placeholder="Choose File" disabled="disabled" hidden/>
+        <div class="fileUpload btn btn-secondary">
+            <span>Upload</span>
+            <input name="catPic" id="uploadBtn" type="file" class="upload"/>
+        </div> -->
         <div class="form group jumbotron">
           <h5>Choose a color for the cat</h5>
           <hr class="my-4">
@@ -56,6 +62,7 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
               <label><input type="radio" name="catColor" value="Unique">Unique</label>
           </div>
         </div>
+        
         <!--end of color, start of tag-->
         <div class="form group jumbotron">
             <h5>Choose some tags for the cat</h5>
@@ -91,6 +98,7 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
         <div class="form-group mx-auto text-center">  
           <button type="submit" class="btn btn-secondary">Send The Form</button>
         </div>
+        
       </div>
     </form>
   </main>

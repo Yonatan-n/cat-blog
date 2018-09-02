@@ -5,6 +5,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser')
 //const mongoose = require('mongoose')
 const multer = require('multer')
+const multers3 = require('multer-s3')
 //const Binary = require('mongodb').Binary
 const PORT = process.env.PORT || 5000
 
@@ -87,6 +88,13 @@ app.get('/api/all', (req, res) =>
     res.send(result.rows)
   }))
 
+app.get('/api/fs', (req, res) => 
+  pool.query(`select * FROM fs_test`, (err, result) => {
+    if (err) throw err
+    res.send(result.rows)
+}))
+
+
 app.get('/api/Dir', (req, res) => res.send(__dirname))
 
 const makeDateStr = (d) => `${d.toDateString().replace(/ /g, "-")}-${(d.toTimeString()).slice(0,8)}`
@@ -127,16 +135,24 @@ app.post('/upload', (req, res) => {
       if (cat.password !== password) {
         return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
       }
-      const imgName = req.file.filename
-      const text = `insert into cat_table 
-      (name, description, color, tags, img_path)
-       VALUES ($1,$2,$3,$4,$5)`
-       const values = [cat.catName, cat.catDesc, cat.catColor, cat.catTag, imgName]      
-        pool.query(text, values, (err, result) => {
-          if (err) throw err
-          console.log(result.rows)
-        })
-        res.redirect("/home")
+      //const imgName = req.file.filename
+      const text = `insert into fs_test 
+      (name, fileblob)
+       VALUES ($1,$2)` // ,$3,$4,$5
+      fs.readFile(path.join(__dirname, 'resources', 'postedCats', req.file.filename), (err, data) => {
+        if (err) throw err
+          const values = [cat.catName/*, cat.catDesc, cat.catColor, cat.catTag*/, data]      
+          pool.query(text, values, (err, result) => {
+            if (err) throw err
+            console.log(result.rows) // OK, so what you gonna do is this:
+            //                       use multer to save a pic "catPic.jpg" (?)
+            //                       to the filesystem and then, read it with fs
+            //                       and insert it to the heroku DB, once you got that
+            //                       going, switch to the AWS DB,
+            //                       then you could move on and make some ui changes adn so on
+          })
+      })
+      res.redirect("/home")      
       }
   })
 })
