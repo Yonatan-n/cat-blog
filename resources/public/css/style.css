@@ -1,5 +1,12 @@
+.headerFont {
+	font-family: 'Special Elite', cursive;
+}
 body, head {
-	font-family: 'Merienda', cursive;
+    font-family: 'Merienda', cursive;
+    font-family: 'Handlee', cursive;
+    font-family: 'Patrick Hand', cursive;
+    font-family: 'PT Mono', monospace;
+    font-family: 'Slabo 27px', serif;
 }
 
 h1 {

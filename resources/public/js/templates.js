@@ -1,7 +1,7 @@
 const tempNavBar =  `
 <div class="header-nav">
 
-    <div class="container-fluid color-peach p-5 text-white" id="head-title">
+    <div class="container-fluid color-peach p-5 text-white headerFont" id="head-title">
       <h3 class="text-center" id="page-title">cat blag</h3>
     </div>
 
