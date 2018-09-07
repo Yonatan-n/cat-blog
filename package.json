@@ -1,27 +1,30 @@
 {
   "name": "cat-blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "A cat blog deployed on heroku useing Express.js, AWS (S3 bucket) and Postgesql (on heroku)",
   "main": "index.js",
   "scripts": {
-    "dev": "./node_modules/.bin/nodemon ./index.js --watch ./index.js --watch ./resources/public/*",
+    "start": "node ./index.js",
+    "dev": "./node_modules/.bin/nodemon ./index.js --watch ./index.js --watch ./resources/public/js/*.js --watch ./resources/public/css/*.css --watch ./resources/public/*.html",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib"
   },
-  "author": "",
+  "author": "Yonatan Ninio",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.307.0",
     "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-layout": "^0.1.0",
     "multer": "^1.3.1",
     "multer-s3": "^2.7.0",
+    "multer-s3-transform": "^2.3.2",
     "pg": "^7.4.3",
-    "pg-promise": "^8.4.6"
+    "sharp": "^0.20.8"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "nodemon": "^1.18.4",
+    "standard": "^12.0.1"
   }
 }

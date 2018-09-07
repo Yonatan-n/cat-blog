@@ -9,21 +9,30 @@ body, head {
     font-family: 'Slabo 27px', serif;
 }
 
-h1 {
-	color: blue;
-}
-
 ul {
 	list-style-type: none;
 }
 
-@media only screen and (min-width : 240px) {
-	/* h5 {
-		color: aqua;
-		color: black;
-		
-	} */
+body {
+	background-color: #f29e91
 }
+div.catCard {
+	
+}
+/* @media only screen and (min-width : 560px) {
+	card {
+		min-width: 250px;
+		color: blueviolet;
+	}
+} */
+/* @media screen and (max-width: 700px) {
+	catCard {
+		min-width: calc(100% / 2);
+	}
+ }
+ @media screen and (max-width: 460px) {
+	catCard{min-width: 100%;}
+ } */
 
 .hoverNav:hover {
 	background-color: #f29e91;
@@ -34,10 +43,6 @@ ul {
 }
 .color-bg {
 	background-color: #423939;
-}
-.cat-card {
-    /*height: 100vh;
-    overflow: auto;*/
 }
 
 .lightly-button {

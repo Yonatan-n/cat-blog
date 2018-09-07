@@ -1,4 +1,4 @@
-const tempNavBar =  `
+const tempNavBar = `
 <div class="header-nav">
 
     <div class="container-fluid color-peach p-5 text-white headerFont" id="head-title">
@@ -17,7 +17,7 @@ const tempNavBar =  `
           <div class="dropdown">
             <button class="dropbtn"><a class="nav-link">Choose a cat</a></button>
             <div class="dropdown-content">
-             <a href="#1">Kittens</a>
+             <a href="/home?by=kitten" /*onclick="alert('kay')*/">Kittens</a>
              <a href="#2">By Named</a>
              <a href="#3">By Color</a>
             </div>
@@ -29,15 +29,13 @@ const tempNavBar =  `
   </div>`
 
 window.onload = (() =>
-  document.querySelector("header").innerHTML = tempNavBar)()
-/*<li class="nav-item dropdown">
+  document.querySelector('header').innerHTML = tempNavBar)()
+/* <li class="nav-item dropdown">
   <a class="nav-link text-white dropdown-toggle" href="#search" data-toggle="dropdown" role="button">Search 4 cats</a>
   <div class="dropdown-menu">
     <a class="dropdown-item" href="#1">link1</a>
   </div>
 </li>
-
-
 
 <li class="nav-item dropdown">
 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
