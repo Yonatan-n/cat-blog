@@ -35,7 +35,7 @@ function createCatCard (name, desc, imgPath, up_date) {
   catCard.className = 'catCard card'
   catCard.style.borderColor = '#f29e91'
   catCard.style.minWidth = '14em' // THIS IS THE NEW RESIEZ THING!!!!
-  catCard.style.maxWidth = '35em'
+  /* catCard.style.maxWidth = '14em'
   catCard.style.margin = '10px 10px 10px 10px' /* top | right | bottom | left */
   let cardBody = document.createElement('div')
   cardBody.className = 'card-body'
@@ -69,10 +69,23 @@ function makeCatList3 (url, to) {
   const parent = document.querySelector(to)
   fetch(url)
     .then(a => a.json())
-    .then(xs => xs.reverse().forEach(x =>
+    .then(xs => xs.forEach(x =>
       parent.append(
         createCatCard(x.name, x.description, x.file_name, x.up_date))))
 }
 
 const baseURL = `${window.location.protocol}//${window.location.host}`
 window.onload = makeCatList3(`${baseURL}/api/all`, '#catList')
+
+function newCatList (url, to = '#catList') {
+  clearCatList()
+  console.log('newCatList works', url, to)
+  makeCatList3(url, to)
+}
+
+function clearCatList () {
+  const list = document.querySelector('#catList')
+  while (list.hasChildNodes()) {
+    list.removeChild(list.firstChild)
+  }
+}

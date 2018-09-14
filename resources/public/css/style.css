@@ -16,9 +16,20 @@ ul {
 body {
 	background-color: #f29e91
 }
-div.catCard {
-	
-}
+
+/* @media (min-width: 570px) {
+	.catCard {
+		width: 300px;
+	}
+	div.card-body{
+	  min-width: 14em;
+	  max-width: 14em;
+	}
+  } */
+.flex-container {
+	display: flex;
+	flex-wrap: wrap;
+  }
 /* @media only screen and (min-width : 560px) {
 	card {
 		min-width: 250px;

@@ -13,6 +13,9 @@
   <header></header>
 
   <main class="container-fluid bg-light">
+    <div class="form-group mx-auto text-center">  
+      <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
+    </div>
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div class="form-group jumbotron">
         <h5>Cat Name</h5>
@@ -41,23 +44,26 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
         <div class="form group jumbotron">
           <h5>Choose a color for the cat</h5>
           <hr class="my-4">
-          <div class="radio">
-            <label><input type="radio" name="catColor" value="Tricolor" checked>Tricolor</label>
+          <div class="checkbox">
+            <label><input type="checkbox" name="catColor" value="Tricolor" checked>Tricolor</label>
           </div>
-          <div class="radio">
-            <label><input type="radio" name="catColor" value="Black">Black</label>
+          <div class="checkbox">
+            <label><input type="checkbox" name="catColor" value="Black">Black</label>
           </div>
-          <div class="radio">
-              <label><input type="radio" name="catColor" value="white">white</label>
+          <div class="checkbox">
+              <label><input type="checkbox" name="catColor" value="White">white</label>
           </div>
-          <div class="radio">
-              <label><input type="radio" name="catColor" value="Black & White">Black &amp; white</label>
+          <div class="checkbox">
+              <label><input type="checkbox" name="catColor" value="B&W">Black &amp; white</label>
           </div>
-          <div class="radio">
-              <label><input type="radio" name="catColor" value="Ginger">Ginger</label>
+          <div class="checkbox">
+              <label><input type="checkbox" name="catColor" value="Ginger">Ginger</label>
           </div>
-          <div class="radio">
-              <label><input type="radio" name="catColor" value="Unique">Unique</label>
+          <div class="checkbox">
+              <label><input type="checkbox" name="catColor" value="Grey">Grey</label>
+          </div>
+          <div class="checkbox">
+              <label><input type="checkbox" name="catColor" value="No Color">No Color</label>
           </div>
         </div>
         

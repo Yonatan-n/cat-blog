@@ -1,5 +1,4 @@
-
-console.log("upload js");
-onload = function() {
-    document.querySelector('form').reset()
+console.log('upload js')
+function clearForm () {
+  document.querySelector('form').reset()
 }

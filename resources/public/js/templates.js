@@ -17,7 +17,7 @@ const tempNavBar = `
           <div class="dropdown">
             <button class="dropbtn"><a class="nav-link">Choose a cat</a></button>
             <div class="dropdown-content">
-             <a href="/home?by=kitten" /*onclick="alert('kay')*/">Kittens</a>
+             <a href="#1" onclick="newCatList(baseURL + '/api/tags/Kitten', '#catList')">Kittens</a>
              <a href="#2">By Named</a>
              <a href="#3">By Color</a>
             </div>
