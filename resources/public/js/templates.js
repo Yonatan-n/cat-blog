@@ -11,22 +11,45 @@ const tempNavBar = `
             <a class="nav-link text-white hoverNav" href="home">Home Feed</a>
           </li>
           <li class="nav-item">
-              <a class="nav-link text-white hoverNav" href="upload">Upload</a>
+          <div class="dropdown">
+            <button class="dropbtn"><a class="nav-link">Names</a></button>
+            <div class="dropdown-content">
+              <a href="#1" onclick="newCatList(baseURL + '/api/name/Nemi', '#catList')">Nemi</a>
+              <a href="#2" onclick="newCatList(baseURL + '/api/name/Para', '#catList')">Para</a>
+              <a href="#3" onclick="newCatList(baseURL + '/api/name/Poki', '#catList')">Poki</a>
+              <a href="#4" onclick="newCatList(baseURL + '/api/name/Elizabeth', '#catList')">Elizabeth</a>
+              <a href="#5" onclick="newCatList(baseURL + '/api/name/Mastick&W', '#catList')">Mastick</a>
+            </div>
+          </div>
           </li>
           <li class="nav-item">
           <div class="dropdown">
-            <button class="dropbtn"><a class="nav-link">Choose a cat</a></button>
+            <button class="dropbtn"><a class="nav-link">Colors</a></button>
             <div class="dropdown-content">
-             <a href="#1" onclick="newCatList(baseURL + '/api/tags/Kitten', '#catList')">Kittens</a>
-             <a href="#2">By Named</a>
-             <a href="#3">By Color</a>
+              <a href="#1" onclick="newCatList(baseURL + '/api/color/Tricolor', '#catList')">Tricolor</a>
+              <a href="#2" onclick="newCatList(baseURL + '/api/color/Ginger', '#catList')">Ginger</a>
+              <a href="#3" onclick="newCatList(baseURL + '/api/color/Black', '#catList')">Black</a>
+              <a href="#4" onclick="newCatList(baseURL + '/api/color/White', '#catList')">White</a>
+              <a href="#5" onclick="newCatList(baseURL + '/api/color/B&W', '#catList')">Black & White</a>
+              <a href="#6" onclick="newCatList(baseURL + '/api/color/Grey', '#catList')">Grey</a>
+              <a href="#7" onclick="newCatList(baseURL + '/api/color/No Color', '#catList')">No Color</a>
             </div>
           </div>
-        </li>
-        </ul>
+          </li>
+          <li class="nav-item">
+          <div class="dropdown">
+            <button class="dropbtn"><a class="nav-link">Tags</a></button>
+            <div class="dropdown-content">
+              <a href="#1" onclick="newCatList(baseURL + '/api/tags/Kitten', '#catList')">Kittens</a>
+              <a href="#2" onclick="newCatList(baseURL + '/api/tags/Fat', '#catList')">Fattys</a>
+              <a href="#3" onclick="newCatList(baseURL + '/api/tags/Dog', '#catList')">Dogs</a>
+              <a href="#4" onclick="newCatList(baseURL + '/api/tags/Special', '#catList')">Special</a>
+            </div>
+          </div>
+          </li>
+      </ul>
     </nav>
-
-  </div>`
+</div>`
 
 window.onload = (() =>
   document.querySelector('header').innerHTML = tempNavBar)()

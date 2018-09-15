@@ -101,6 +101,19 @@ app.get('/api/tags/:tag', (req, res) => {
     })
   }
 })
+
+app.get('/api/name/:name', (req, res) => {
+  const tagList = ['Nemi', 'Para', 'Poki', 'Elizabeth', 'Mastick']
+  const name = req.params.name
+  if (!(tagList.some(x => x === name))) {
+    res.send(`"${name}" is not a valid name of cat!`)
+  } else {
+    pool.query(`SELECT * FROM cat_table_s3 WHERE name LIKE '%${name}%' ORDER BY up_date DESC`, (err, result) => {
+      if (err) throw err
+      res.send(result.rows)
+    })
+  }
+})
 /* s3.getObject({
   Bucket: "cat-blag-bucket",
   Key: "cat-blag-s3/catPic-Sun-Sep-02-2018-09:50:16.jpg"
