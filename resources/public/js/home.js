@@ -56,7 +56,18 @@ function createCatCard (name, desc, imgPath, up_date) {
   catDate.style.fontSize = '0.7em'
   // <p class="card-text" id='catDate' style="font-size: 0.9em;">29-08-2018</p>
   // end of def
-  cardBody.append(img, cardTitle, cardDesc, catDate)
+  // <div class="form-group mx-auto text-center">
+  // <button type="submit" class="btn btn-secondary">Send The Form</button>
+  // </div>
+  let catButton = document.createElement('div')
+  catButton.className = 'text-center mx-auto'
+  catButton.id = 'edit-button'
+  catButton.style.display = 'none'
+  let aButton = document.createElement('button')
+  aButton.className = 'btn btn-primary'
+  aButton.innerText = 'Edit'
+  catButton.appendChild(aButton)
+  cardBody.append(img, cardTitle, cardDesc, catDate, catButton)
   catCard.appendChild(cardBody)
   return catCard
 }
@@ -87,5 +98,35 @@ function clearCatList () {
   const list = document.querySelector('#catList')
   while (list.hasChildNodes()) {
     list.removeChild(list.firstChild)
+  }
+}
+
+function toggleButton (button = '#edit-button') {
+  let btnList = document.querySelectorAll(button)
+  btnList.forEach(btn => {
+    if (btn.style.display === 'none') {
+      btn.style.display = 'block'
+    } else {
+      btn.style.display = 'none'
+    }
+  })
+}
+function buttonHandler () {
+  window.alert('btton!')
+}
+// 'listen to change of url, if the #1 part is #edit, toggle the buttons'
+window.onpopstate = function (x) {
+  if (this.document.location.hash === '#edit') {
+    toggleButton()
+    const buttonList = document.querySelectorAll('#edit-button')
+    buttonList.forEach(btn => btn.addEventListener('click', x => console.log(
+      x
+        .explicitOriginalTarget
+        .parentElement
+        .parentElement
+        .childNodes[0]
+        .src)))
+    // document.querySelectorAll.forEach( btn => btn.addEventListener(;click))
+    // document.query('myBtn').addEventListener('click', displayDate)
   }
 }
