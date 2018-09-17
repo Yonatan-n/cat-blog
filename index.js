@@ -7,6 +7,7 @@ const multer = require('multer')
 const multerS3 = require('multer-s3-transform') // not "multer-s3", but "multer-s3-transform"
 const AWS = require('aws-sdk')
 const sharp = require('sharp')
+const cookieParser = require('cookie-parser')
 require('dotenv').config() // this add the env vars in the .env file to the process.env, importent for AWS, postgesql and form password
 const awsConfig = {
   'region': 'us-east-1',
@@ -29,7 +30,9 @@ pool.on('error', (err, client) => {
 // Heroku Postgresql
 const pathToPublic = `${__dirname}/resources/public`
 const password = process.env.formPassword
-const urlencodedParser = bodyParser.urlencoded({ extended: true })
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var jsonParser = bodyParser.json()
+app.use(cookieParser())
 
 app.use(express.static(pathToPublic))
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -44,23 +47,33 @@ app.use((req, res, next) => { // simple requests logger
 })
 
 // page navigetion stuff HOME | UPLOAD | SEARCH
+app.get('/cookie', (req, res) =>
+  console.log(req.cookies))
 
 app.get('/', (req, res) =>
   res.redirect('/home')) // (path.join(__dirname, p2f, "index.html")))
 
-app.get('/home', (req, res) => {
-  // console.log(req.query)
-  res.sendFile(path.join(pathToPublic, 'index.html'))
-})
+app.get('/home', (req, res) =>
+  res.sendFile(path.join(pathToPublic, 'index.html')))
 
 app.get('/upload', (req, res) =>
   res.sendFile(path.join(pathToPublic, 'upload.html')))
 
+app.get('/edit', (req, res) =>
+  res.sendFile(path.join(pathToPublic, 'edit.html')))
+
 app.get('/search', (req, res) =>
   res.sendFile(path.join(pathToPublic, 'search.html')))
 
-app.get('/cardGrid', (req, res) =>
-  res.sendFile(path.join(pathToPublic, 'carGrid.html')))
+/* app.get('/editGetParams/:imgUrl', (req, res) => {
+  const fullPicUrl = `https://s3.amazonaws.com/cat-blag-bucket/cat-blag-s3/${req.params.imgUrl}`
+  pool.query('SELECT name, description, color, tags FROM cat_table_s3 WHERE file_name = $1', [fullPicUrl], (err, result) => {
+    if (err) throw err
+    res.redirect(`/edit/${(JSON.stringify(result.rows[0]))}`)
+  })
+  // res.send(req.params.imgUrl)
+}) */
+// res.sendFile(path.join(pathToPublic, 'carGrid.html')))
 
 // api stuff
 app.get('/api/img1/:name', (req, res) => // old
@@ -113,6 +126,34 @@ app.get('/api/name/:name', (req, res) => {
       res.send(result.rows)
     })
   }
+})
+
+app.get('/api/one/:imgUrl', (req, res) => {
+  const fullPicUrl = `https://s3.amazonaws.com/cat-blag-bucket/cat-blag-s3/${req.params.imgUrl}`
+  pool.query('SELECT name, description, color, tags, id FROM cat_table_s3 WHERE file_name = $1', [fullPicUrl], (err, result) => {
+    if (err) throw err
+    // convert {1,2} -> [1,2]
+    let sendThis = result.rows[0]
+    const tempColor = sendThis.color
+    const tempTag = sendThis.tags
+    // start of color tag
+    if (tempColor === undefined || tempColor === null) {
+      sendThis.color = []
+    } else if (tempColor.indexOf(',') !== -1) {
+      sendThis.color = JSON.parse(`[${tempColor.slice(1, tempColor.length - 1)}]`)
+    } else {
+      sendThis.color = JSON.parse('["' + tempColor + '"]')
+    } // end of color start of tags
+    if (tempTag === undefined || tempTag === null) {
+      sendThis.tags = []
+    } else if (tempTag.indexOf(',') !== -1) {
+      sendThis.tags = JSON.parse(`[${tempTag.slice(1, tempTag.length - 1)}]`)
+    } else {
+      sendThis.tags = JSON.parse('["' + tempTag + '"]')
+    }
+    // finally
+    res.send(sendThis)
+  })
 })
 /* s3.getObject({
   Bucket: "cat-blag-bucket",
@@ -195,8 +236,15 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
   }
 })
 
-app.get('/upload2', (req, res) => {
-  res.send('alright')
+app.post('/edit', urlencodedParser, (req, res) => {
+  const cat = JSON.parse(JSON.stringify(req.body))
+  if (cat.password !== password && false) {
+    return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
+  }
+  pool.query('UPDATE cat_table_s3 SET name = $1, description = $2, color = $3, tags = $4 WHERE id = $5', [cat.catName, cat.catDesc, cat.catColor, cat.catTag, cat.catId], (err, result) => {
+    if (err) throw err
+    res.redirect('/home')
+  })
 })
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))

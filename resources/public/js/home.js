@@ -30,7 +30,7 @@ function changeCatPic () {
 }
 
 function createCatCard (name, desc, imgPath, up_date) {
-  console.log(imgPath)
+  // console.log(imgPath)
   let catCard = document.createElement('div')
   catCard.className = 'catCard card'
   catCard.style.borderColor = '#f29e91'
@@ -111,22 +111,30 @@ function toggleButton (button = '#edit-button') {
     }
   })
 }
-function buttonHandler () {
-  window.alert('btton!')
+
+function clearCookies () {
+  exp = '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  return exp
 }
+
 // 'listen to change of url, if the #1 part is #edit, toggle the buttons'
 window.onpopstate = function (x) {
   if (this.document.location.hash === '#edit') {
     toggleButton()
     const buttonList = document.querySelectorAll('#edit-button')
-    buttonList.forEach(btn => btn.addEventListener('click', x => console.log(
-      x
+    buttonList.forEach(btn => btn.addEventListener('click', x => {
+      const imgUrl = x
         .explicitOriginalTarget
         .parentElement
         .parentElement
         .childNodes[0]
-        .src)))
-    // document.querySelectorAll.forEach( btn => btn.addEventListener(;click))
-    // document.query('myBtn').addEventListener('click', displayDate)
+        .src
+      // console.log(imgUrl.slice(53))
+      const imgName = imgUrl.slice(53)
+      window.fetch(`${baseURL}/api/one/${imgName}`)
+        .then(x => x.json())
+        .then(x => document.cookie = `cat = ${JSON.stringify(x)}`)
+        .then(() => window.location = `${baseURL}/edit`)
+    }))
   }
 }
