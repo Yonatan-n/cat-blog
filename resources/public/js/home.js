@@ -122,7 +122,7 @@ window.onpopstate = function (x) {
   if (this.document.location.hash === '#edit') {
     toggleButton()
     const buttonList = document.querySelectorAll('#edit-button')
-    buttonList.forEach(btn => btn.addEventListener('click', x => {
+    buttonList.forEach(btn => btn.addEventListener('click touchstart', x => {
       const imgUrl = x
         .explicitOriginalTarget
         .parentElement

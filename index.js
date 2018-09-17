@@ -1,3 +1,5 @@
+// copy_cat_table is a DEV database! please try not to use cat_table_s3 at development,
+// sinces it's your PRODUCTION database, man!
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -61,19 +63,6 @@ app.get('/upload', (req, res) =>
 
 app.get('/edit', (req, res) =>
   res.sendFile(path.join(pathToPublic, 'edit.html')))
-
-app.get('/search', (req, res) =>
-  res.sendFile(path.join(pathToPublic, 'search.html')))
-
-/* app.get('/editGetParams/:imgUrl', (req, res) => {
-  const fullPicUrl = `https://s3.amazonaws.com/cat-blag-bucket/cat-blag-s3/${req.params.imgUrl}`
-  pool.query('SELECT name, description, color, tags FROM cat_table_s3 WHERE file_name = $1', [fullPicUrl], (err, result) => {
-    if (err) throw err
-    res.redirect(`/edit/${(JSON.stringify(result.rows[0]))}`)
-  })
-  // res.send(req.params.imgUrl)
-}) */
-// res.sendFile(path.join(pathToPublic, 'carGrid.html')))
 
 // api stuff
 app.get('/api/img1/:name', (req, res) => // old
@@ -231,7 +220,6 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
       `https://s3.amazonaws.com/cat-blag-bucket/cat-blag-s3/${req.file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(req.file.originalname)}`]
     pool.query(text, values, (err, result) => {
       if (err) throw err
-      // console.log(result.rows, `Also the date is: ${req.reqTime}`,`Values are: ${values}`) // OK, so what you gonna do is this:
     })
   }
 })
