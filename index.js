@@ -238,7 +238,7 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
 
 app.post('/edit', urlencodedParser, (req, res) => {
   const cat = JSON.parse(JSON.stringify(req.body))
-  if (cat.password !== password && false) {
+  if (cat.password !== password) {
     return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
   }
   pool.query('UPDATE cat_table_s3 SET name = $1, description = $2, color = $3, tags = $4 WHERE id = $5', [cat.catName, cat.catDesc, cat.catColor, cat.catTag, cat.catId], (err, result) => {
