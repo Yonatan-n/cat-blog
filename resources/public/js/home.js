@@ -64,8 +64,11 @@ function createCatCard (name, desc, imgPath, up_date) {
   catButton.id = 'edit-button'
   catButton.style.display = 'none'
   let aButton = document.createElement('button')
+  // aButton.style = 'cursor:pointer'
+  aButton.name = 'editButton'
   aButton.className = 'btn btn-primary'
   aButton.innerText = 'Edit'
+  aButton.onclick = buttonEventHandler // This is the buttons Event Handler
   catButton.appendChild(aButton)
   cardBody.append(img, cardTitle, cardDesc, catDate, catButton)
   catCard.appendChild(cardBody)
@@ -117,24 +120,18 @@ function clearCookies () {
   return exp
 }
 
+function buttonEventHandler () {
+  const imgUrl = this.parentElement.parentElement.childNodes[0].src
+  const imgName = imgUrl.slice(53)
+  window.fetch(`${baseURL}/api/one/${imgName}`)
+    .then(x => x.json())
+    .then(x => document.cookie = `cat = ${JSON.stringify(x)}`)
+    .then(() => window.location = `${baseURL}/edit`)
+}
+
 // 'listen to change of url, if the #1 part is #edit, toggle the buttons'
 window.onpopstate = function (x) {
   if (this.document.location.hash === '#edit') {
     toggleButton()
-    const buttonList = document.querySelectorAll('#edit-button')
-    buttonList.forEach(btn => btn.addEventListener('click touchstart', x => {
-      const imgUrl = x
-        .explicitOriginalTarget
-        .parentElement
-        .parentElement
-        .childNodes[0]
-        .src
-      // console.log(imgUrl.slice(53))
-      const imgName = imgUrl.slice(53)
-      window.fetch(`${baseURL}/api/one/${imgName}`)
-        .then(x => x.json())
-        .then(x => document.cookie = `cat = ${JSON.stringify(x)}`)
-        .then(() => window.location = `${baseURL}/edit`)
-    }))
   }
 }
