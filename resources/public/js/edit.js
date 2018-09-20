@@ -1,9 +1,11 @@
+const baseURL = `${window.location.protocol}//${window.location.host}`
+
 const cookie = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)cat\s*\=\s*([^;]*).*$)|^.*$/, '$1'))
-const myColors = cookie.color
+/* const myColors = cookie.color
 const myTags = cookie.tags
 
 let colorList = document.getElementsByName('catColor') // html node list
-let tagList = document.getElementsByName('catTag') // html node list
+let tagList = document.getElementsByName('catTag') // html node list */
 
 function clearForm () {
   document.querySelector('form').reset()
@@ -19,7 +21,7 @@ function checkValidBoxes (listOf, validOf) {
   })
 }
 
-document.getElementsByName('catName')[0].value = cookie.name // change name to cat name
+/* document.getElementsByName('catName')[0].value = cookie.name // change name to cat name
 document.getElementsByName('catDesc')[0].value = cookie.description // change desc to cat desc
 document.getElementsByName('catId')[0].value = cookie.id
 if (myColors) { // check the cat colors boxes
@@ -27,4 +29,23 @@ if (myColors) { // check the cat colors boxes
 }
 if (myTags) { // check the cat tags boxes
   checkValidBoxes(tagList, myTags)
-}
+} */
+
+document.onload = fetch(`${baseURL}/api/byId/${(document.location.hash).slice(1)}`)
+  .then(x => x.json())
+  .then(x => {
+    const myColors = x.color
+    const myTags = x.tags
+    let colorList = document.getElementsByName('catColor') // html node list
+    let tagList = document.getElementsByName('catTag') // html node list
+
+    document.getElementsByName('catName')[0].value = x.name // change name to cat name
+    document.getElementsByName('catDesc')[0].value = x.description // change desc to cat desc
+    document.getElementsByName('catId')[0].value = x.id
+    if (myColors) { // check the cat colors boxes
+      checkValidBoxes(colorList, myColors)
+    }
+    if (myTags) { // check the cat tags boxes
+      checkValidBoxes(tagList, myTags)
+    }
+  })

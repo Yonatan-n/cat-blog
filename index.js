@@ -52,17 +52,20 @@ app.use((req, res, next) => { // simple requests logger
 app.get('/cookie', (req, res) =>
   console.log(req.cookies))
 
-app.get('/', (req, res) =>
+app.get('/', (req, res) => // view
   res.redirect('/home')) // (path.join(__dirname, p2f, "index.html")))
 
-app.get('/home', (req, res) =>
+app.get('/home', (req, res) => // view
   res.sendFile(path.join(pathToPublic, 'index.html')))
 
-app.get('/upload', (req, res) =>
+app.get('/upload', (req, res) => // create
   res.sendFile(path.join(pathToPublic, 'upload.html')))
 
-app.get('/edit', (req, res) =>
+app.get('/edit', (req, res) => // update
   res.sendFile(path.join(pathToPublic, 'edit.html')))
+
+app.get('/delete', (req, res) =>
+  res.sendFile(path.join(pathToPublic, 'delete.html')))
 
 // api stuff
 app.get('/api/img1/:name', (req, res) => // old
@@ -77,6 +80,13 @@ app.get('/api/all', (req, res) =>
     if (err) throw err
     res.send(result.rows)
   }))
+
+app.get('/api/delete/:id', (req, res) => {
+  pool.query('DELETE FROM cat_table_s3 WHERE id = $1', [req.params.id], (err, result) => {
+    if (err) throw err
+    res.redirect('/home')
+  })
+})
 
 app.get('/api/color/:color', (req, res) => {
   const colorList = ['Tricolor', 'Ginger', 'Black', 'White', 'B&W', 'Grey', 'No Color'] // color options
@@ -142,6 +152,13 @@ app.get('/api/one/:imgUrl', (req, res) => {
     }
     // finally
     res.send(sendThis)
+  })
+})
+
+app.get('/api/byId/:id', (req, res) => {
+  pool.query('SELECT name, description, color, tags, file_name, id FROM cat_table_s3 WHERE id = $1', [Number(req.params.id)], (err, result) => {
+    if (err) throw err
+    res.send(result.rows[0])
   })
 })
 /* s3.getObject({
@@ -235,4 +252,7 @@ app.post('/edit', urlencodedParser, (req, res) => {
   })
 })
 
+app.get('/*', (req, res) => {
+  return res.sendFile(path.join(pathToPublic, '404.html'))
+})
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))

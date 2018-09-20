@@ -9,27 +9,7 @@ function makeCatList1 () {
     .reduce((a, b) => a + b, '')
 }
 
-function makeCatList2 () {
-  const x = document.querySelector('template').content
-  document.querySelector('#catList').appendChild(
-    document.importNode(x, true))
-}
-
-function useIt () { // Make a vanilla js compouent of the cat-card-thing
-  const x = document.querySelector('template').content
-  document.querySelector('#catList').appendChild(
-    document.importNode(x, true))
-}
-
-// useIt()
-function changeCatPic () {
-  let img = document.querySelector('#catPic')
-  fetch('http://localhost:5000/img/cat5.jpg')
-    .then((x) => x.blob())
-    .then((x) => img.src = URL.createObjectURL(x))
-}
-
-function createCatCard (name, desc, imgPath, up_date) {
+function createCatCard (name, desc, imgPath, up_date, theId) {
   // console.log(imgPath)
   let catCard = document.createElement('div')
   catCard.className = 'catCard card'
@@ -63,14 +43,26 @@ function createCatCard (name, desc, imgPath, up_date) {
   catButton.className = 'text-center mx-auto'
   catButton.id = 'edit-button'
   catButton.style.display = 'none'
+  catButton.style.position = 'absolute'
+  catButton.style.bottom = '0'
   let aButton = document.createElement('button')
   // aButton.style = 'cursor:pointer'
   aButton.name = 'editButton'
   aButton.className = 'btn btn-primary'
   aButton.innerText = 'Edit'
-  aButton.onclick = buttonEventHandler // This is the buttons Event Handler
-  catButton.appendChild(aButton)
-  cardBody.append(img, cardTitle, cardDesc, catDate, catButton)
+  aButton.onclick = buttonEditHandler // This is the buttons Event Handler
+  aButton.style.margin = '0px 5px 0px 5px'
+  let bButton = document.createElement('button')
+  bButton.name = 'deleteButton'
+  bButton.className = 'btn btn-danger'
+  bButton.innerText = 'Delete'
+  bButton.onclick = buttonDeleteHandler
+  bButton.style.margin = '0px 5px 0px 5px'
+  let catId = document.createElement('p')
+  catId.innerText = theId
+  catId.style.display = 'none'
+  catButton.append(aButton, bButton)
+  cardBody.append(img, cardTitle, cardDesc, catDate, catButton, catId)
   catCard.appendChild(cardBody)
   return catCard
 }
@@ -85,16 +77,7 @@ function makeCatList3 (url, to) {
     .then(a => a.json())
     .then(xs => xs.forEach(x =>
       parent.append(
-        createCatCard(x.name, x.description, x.file_name, x.up_date))))
-}
-
-const baseURL = `${window.location.protocol}//${window.location.host}`
-window.onload = makeCatList3(`${baseURL}/api/all`, '#catList')
-
-function newCatList (url, to = '#catList') {
-  clearCatList()
-  console.log('newCatList works', url, to)
-  makeCatList3(url, to)
+        createCatCard(x.name, x.description, x.file_name, x.up_date, x.id))))
 }
 
 function clearCatList () {
@@ -120,14 +103,19 @@ function clearCookies () {
   return exp
 }
 
-function buttonEventHandler () {
-  const imgUrl = this.parentElement.parentElement.childNodes[0].src
-  const imgName = imgUrl.slice(53)
-  window.fetch(`${baseURL}/api/one/${imgName}`)
-    .then(x => x.json())
-    .then(x => document.cookie = `cat = ${JSON.stringify(x)}`)
-    .then(() => window.location = `${baseURL}/edit`)
+function buttonEditHandler () {
+  const nodeList = this.parentElement.parentElement
+  const catId = nodeList.childNodes[5].innerText
+  window.location = `${baseURL}/edit#${catId}`
 }
+function buttonDeleteHandler () {
+  const nodeList = this.parentElement.parentElement
+  const catId = nodeList.childNodes[5].innerText
+  window.location = `${baseURL}/delete#${catId}`
+}
+
+const baseURL = `${window.location.protocol}//${window.location.host}`
+window.onload = makeCatList3(`${baseURL}/api/all`, '#catList')
 
 // 'listen to change of url, if the #1 part is #edit, toggle the buttons'
 window.onpopstate = function (x) {
