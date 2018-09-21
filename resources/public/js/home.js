@@ -43,8 +43,8 @@ function createCatCard (name, desc, imgPath, up_date, theId) {
   catButton.className = 'text-center mx-auto'
   catButton.id = 'edit-button'
   catButton.style.display = 'none'
-  catButton.style.position = 'absolute'
-  catButton.style.bottom = '0'
+  // catButton.style.position = 'absolute'
+  // catButton.style.bottom = '0'
   let aButton = document.createElement('button')
   // aButton.style = 'cursor:pointer'
   aButton.name = 'editButton'
@@ -62,7 +62,7 @@ function createCatCard (name, desc, imgPath, up_date, theId) {
   catId.innerText = theId
   catId.style.display = 'none'
   catButton.append(aButton, bButton)
-  cardBody.append(img, cardTitle, cardDesc, catDate, aButton, bButton, catId)
+  cardBody.append(img, cardTitle, cardDesc, catDate, catButton, catId)
   catCard.appendChild(cardBody)
   return catCard
 }
