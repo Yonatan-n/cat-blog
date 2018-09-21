@@ -51,18 +51,18 @@ function createCatCard (name, desc, imgPath, up_date, theId) {
   aButton.className = 'btn btn-primary'
   aButton.innerText = 'Edit'
   aButton.onclick = buttonEditHandler // This is the buttons Event Handler
-  aButton.style.margin = '0px 5px 0px 5px'
+  aButton.style.margin = '0px 10px 0px 10px'
   let bButton = document.createElement('button')
   bButton.name = 'deleteButton'
   bButton.className = 'btn btn-danger'
   bButton.innerText = 'Delete'
   bButton.onclick = buttonDeleteHandler
-  bButton.style.margin = '0px 5px 0px 5px'
+  bButton.style.margin = '0px 10px 0px 10px'
   let catId = document.createElement('p')
   catId.innerText = theId
   catId.style.display = 'none'
   catButton.append(aButton, bButton)
-  cardBody.append(img, cardTitle, cardDesc, catDate, catButton, catId)
+  cardBody.append(img, cardTitle, cardDesc, catDate, aButton, bButton, catId)
   catCard.appendChild(cardBody)
   return catCard
 }
@@ -96,6 +96,12 @@ function toggleButton (button = '#edit-button') {
       btn.style.display = 'none'
     }
   })
+}
+
+function newCatList (url, to = '#catList') {
+  clearCatList()
+  // console.log('newCatList works', url, to)
+  makeCatList3(url, to)
 }
 
 function clearCookies () {
