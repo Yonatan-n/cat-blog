@@ -1,11 +1,11 @@
 const baseURL = `${window.location.protocol}//${window.location.host}`
 
-const cookie = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)cat\s*\=\s*([^;]*).*$)|^.*$/, '$1'))
+// const cookie = JSON.parse(document.cookie.replace(/(?:(?:^|.*;\s*)cat\s*\=\s*([^;]*).*$)|^.*$/, '$1'))
 /* const myColors = cookie.color
 const myTags = cookie.tags
 
-let colorList = document.getElementsByName('catColor') // html node list
-let tagList = document.getElementsByName('catTag') // html node list */
+let colorList = document.getElementsByName('catColor') html node list
+let tagList = document.getElementsByName('catTag')  html node list */
 
 function clearForm () {
   document.querySelector('form').reset()

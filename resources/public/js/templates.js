@@ -8,7 +8,7 @@ const tempNavBar = `
     <nav class="navbar navbar-expand-sm color-bg" id="nav-bar">
       <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link text-white hoverNav" href="home">Home Feed</a>
+            <a class="nav-link text-white hoverNav" href="home">Home</a>
           </li>
           <li class="nav-item">
           <div class="dropdown">
@@ -51,8 +51,10 @@ const tempNavBar = `
     </nav>
 </div>`
 
-window.onload = (() =>
-  document.querySelector('header').innerHTML = tempNavBar)()
+window.onload = (function () {
+  document.querySelector('header').innerHTML = tempNavBar
+  // document.querySelector('topButton')
+})()
 /* <li class="nav-item dropdown">
   <a class="nav-link text-white dropdown-toggle" href="#search" data-toggle="dropdown" role="button">Search 4 cats</a>
   <div class="dropdown-menu">

@@ -7,6 +7,7 @@ document.onload = fetch(`${baseURL}/api/byId/${(document.location.hash).slice(1)
     document.getElementById('name').innerText = x.name // change name to cat name
     document.getElementById('desc').innerText = x.description // change desc to cat desc
     document.getElementById('image').src = x.file_name
+    document.getElementById('catId').value = window.location.hash.slice(1)
   })
 
 function deleteButtonHandler () {

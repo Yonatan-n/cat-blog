@@ -14,6 +14,7 @@
   <header></header>
     <main class="container-fluid" style="max-width: 35em;">  
     <div class="card text-center" style="margin: 2em 0em 2em 0em; align-self: center; border-color: rgb(242, 158, 145);">
+      <form action="/delete" method="POST" enctype="application/x-www-form-urlencoded">
       <p style="display: none;" id='theId'></p>
       <div class="card-body">
         <h3 id='name'></h4>
@@ -24,6 +25,8 @@
         <div>
           <img id='image' alt="cat Picture" class="card-img-top d-block">
         </div>
+        <input type="password" name="password">
+        <input type="text" name='id' id='catId' hidden>
           <button class="btn btn-danger" style="margin: 5px 5px 5px 5px;" onclick="deleteButtonHandler()">
          <span>remove</span>
           </button>
