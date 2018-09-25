@@ -55,8 +55,14 @@ app.get('/cookie', (req, res) =>
 app.get('/', (req, res) => // view
   res.redirect('/home')) // (path.join(__dirname, p2f, "index.html")))
 
+app.get('/temp', (req, res) =>
+  res.sendFile(path.join(pathToPublic, 'temp.html')))
+
 app.get('/home', (req, res) => // view
   res.sendFile(path.join(pathToPublic, 'index.html')))
+
+app.get('/about', (req, res) => // view
+  res.sendFile(path.join(pathToPublic, 'about.html')))
 
 app.get('/upload', (req, res) => // create
   res.sendFile(path.join(pathToPublic, 'upload.html')))
@@ -81,12 +87,17 @@ app.get('/api/all', (req, res) =>
     res.send(result.rows)
   }))
 
-app.get('/api/delete/:id', (req, res) => {
-  pool.query('DELETE FROM cat_table_s3 WHERE id = $1', [req.params.id], (err, result) => {
-    if (err) throw err
-    res.redirect('/home')
-  })
-})
+/* app.get('/api/delete/:id', (req, res) => {
+  console.log(req.params.password)
+  if (req.params.password != password) {
+    res.sendFile(path.join(pathToPublic, 'wrongPass.html'))
+  } else {
+    pool.query('DELETE FROM cat_table_s3 WHERE id = $1', [req.params.id], (err, result) => {
+      if (err) throw err
+      res.redirect('/home')
+    })
+  }
+}) */
 
 app.get('/api/color/:color', (req, res) => {
   const colorList = ['Tricolor', 'Ginger', 'Black', 'White', 'B&W', 'Grey', 'No Color'] // color options
@@ -226,7 +237,7 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
   } else {
     const cat = JSON.parse(JSON.stringify(req.body)) // format cat body so you can use it
     if (cat.password !== password) {
-      return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
+      return res.sendFile(path.join(pathToPublic, 'wrongPass.html'))
     }
     res.redirect('/home')
     const text = `insert into cat_table_s3 
@@ -244,15 +255,26 @@ app.post('/upload', upload.single('catPic'), (req, res) => {
 app.post('/edit', urlencodedParser, (req, res) => {
   const cat = JSON.parse(JSON.stringify(req.body))
   if (cat.password !== password) {
-    return res.send(`<h1 style="color: blue;">incorrect password, try again love</h1>`)
+    return res.sendFile(path.join(pathToPublic, 'wrongPass.html'))
   }
   pool.query('UPDATE cat_table_s3 SET name = $1, description = $2, color = $3, tags = $4 WHERE id = $5', [cat.catName, cat.catDesc, cat.catColor, cat.catTag, cat.catId], (err, result) => {
     if (err) throw err
     res.redirect('/home')
   })
 })
+app.post('/delete', urlencodedParser, (req, res) => {
+  const cat = JSON.parse(JSON.stringify(req.body))
+  console.log(cat)
+  if (cat.password !== password) {
+    return res.sendFile(path.join(pathToPublic, 'wrongPass.html'))
+  }
+  pool.query('DELETE FROM cat_table_s3 WHERE id = $1', [cat.id], (err, result) => {
+    if (err) throw err
+    res.redirect('/home')
+  })
+})
 
-app.get('/*', (req, res) => {
+app.get('/*', (req, res) => { // 404 page, any other page i didn't define route for
   return res.sendFile(path.join(pathToPublic, '404.html'))
 })
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))

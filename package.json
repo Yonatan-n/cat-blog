@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
-    "dev": "./node_modules/.bin/nodemon ./index.js --watch ./index.js --watch ./resources/public/js/*.js --watch ./resources/public/css/*.css --watch ./resources/public/*.html",
+    "dev": "nodemon --watch index.js --watch resources/public/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib"
   },
@@ -25,7 +25,6 @@
     "sharp": "^0.20.8"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4",
     "standard": "^12.0.1"
   }
 }

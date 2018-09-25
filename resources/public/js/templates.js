@@ -1,4 +1,6 @@
-const tempNavBar = `
+const baseURL = `${window.location.protocol}//${window.location.host}`
+
+const tempNavBar1 = `
 <div class="header-nav">
 
     <div class="container-fluid color-peach p-5 text-white headerFont" id="head-title">
@@ -50,11 +52,30 @@ const tempNavBar = `
       </ul>
     </nav>
 </div>`
-
+// This one is no longer in use
 const buttonTemp = `
 <button onclick="window.scroll({top: 0, behavior: 'smooth'})" id="toTopButton" title="Go to top">
   <img src="./arrow.png" alt="upArrow" style="height: 2em;">  
 </button>`
+
+const tempNavBar = `
+<div class="header-nav">
+
+          <div class="container-fluid color-peach p-5 text-white headerFont" id="head-title">
+            <h3 class="text-center" id="page-title">cat blag</h3>
+          </div>
+      
+          <nav class="navbar navbar-expand-sm color-bg" id="nav-bar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link text-white hoverNav" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white hoverNav" href="/about">About</a>
+                </li>
+            </ul>
+          </nav>
+      </div>`
 
 window.onload = (function () {
   document.querySelector('header').innerHTML = tempNavBar
