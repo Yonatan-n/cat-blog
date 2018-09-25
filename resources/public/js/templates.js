@@ -65,28 +65,8 @@ window.onscroll = function () { scrollFunction() }
 
 function scrollFunction () {
   document.getElementById('toTopButton').style.display = (
-    window.scrollY > 50
+    window.scrollY > 600
       ? 'block'
       : 'none'
   )
 }
-
-/* <li class="nav-item dropdown">
-  <a class="nav-link text-white dropdown-toggle" href="#search" data-toggle="dropdown" role="button">Search 4 cats</a>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#1">link1</a>
-  </div>
-</li>
-
-<li class="nav-item dropdown">
-<a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-Choose Cats
-</a>
-<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-<a class="dropdown-item" href="#">Action</a>
-<a class="dropdown-item" href="#">Another action</a>
-<div class="dropdown-divider"></div>
-<a class="dropdown-item" href="#">Something else here</a>
-</div>
-</li>
-*/
