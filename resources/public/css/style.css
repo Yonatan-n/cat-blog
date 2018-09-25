@@ -156,10 +156,11 @@ li:hover li {
     float: none;
 }
 li:hover a {
-  background: #423939;
+	background: #423939;
+	color: #f29e91;
 }
 li:hover li a:hover {
-  background: #423939;
+  background:#494040;
 }
 .main-navigation li ul li {
   border-top: 0;
