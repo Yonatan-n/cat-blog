@@ -52,7 +52,7 @@ const tempNavBar = `
 </div>`
 
 const buttonTemp = `
-<button onclick="window.scroll(0,0)" id="toTopButton" title="Go to top">
+<button onclick="window.scroll({top: 0, behavior: 'smooth'})" id="toTopButton" title="Go to top">
   <img src="./arrow.png" alt="upArrow" style="height: 2em;">  
 </button>`
 
@@ -64,19 +64,13 @@ window.onload = (function () {
 window.onscroll = function () { scrollFunction() }
 
 function scrollFunction () {
-  if (window.scrollY > 50) {
-    document.getElementById('toTopButton').style.display = 'block'
-  } else {
-    document.getElementById('toTopButton').style.display = 'none'
-  }
+  document.getElementById('toTopButton').style.display = (
+    window.scrollY > 50
+      ? 'block'
+      : 'none'
+  )
 }
 
-// When the user clicks on the button, scroll to the top of the document
-function topFunction () {
-  window.scroll(0, 0)
-  /* document.body.scrollTop = 0; legacy, not needed?
-      document.documentElement.scrollTop = 0; */
-}
 /* <li class="nav-item dropdown">
   <a class="nav-link text-white dropdown-toggle" href="#search" data-toggle="dropdown" role="button">Search 4 cats</a>
   <div class="dropdown-menu">

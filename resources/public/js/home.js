@@ -1,4 +1,4 @@
-function makeCatList1 () {
+/* function makeCatList1 () {
   const daList = document.getElementById('imgls')
   catCardTemplate = (x) => `
     <li class="text-center">cat name: ${x.name}<br/>
@@ -7,7 +7,7 @@ function makeCatList1 () {
                                       </li>`
   daList.innerHTML = xs.map((x) => catCardTemplate(x))
     .reduce((a, b) => a + b, '')
-}
+} */
 
 function createCatCard (name, desc, imgPath, up_date, theId) {
   // console.log(imgPath)
@@ -73,15 +73,15 @@ function appendCatList (xs, to) {
 
 function makeCatList3 (url, to) {
   const parent = document.querySelector(to)
-  fetch(url)
+  window.fetch(url)
     .then(a => a.json())
     .then(xs => xs.forEach(x =>
       parent.append(
         createCatCard(x.name, x.description, x.file_name, x.up_date, x.id))))
 }
 
-function clearCatList () {
-  const list = document.querySelector('#catList')
+function clearCatList (catList) {
+  const list = document.querySelector(catList)
   while (list.hasChildNodes()) {
     list.removeChild(list.firstChild)
   }
@@ -99,15 +99,14 @@ function toggleButton (button = '#edit-button') {
 }
 
 function newCatList (url, to = '#catList') {
-  clearCatList()
-  // console.log('newCatList works', url, to)
+  clearCatList(to)
   makeCatList3(url, to)
 }
 
-function clearCookies () {
+/* function clearCookies () {
   exp = '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
   return exp
-}
+} */
 
 function buttonEditHandler () {
   const nodeList = this.parentElement.parentElement
