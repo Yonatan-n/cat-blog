@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next()
 })
 app.use((req, res, next) => { // simple requests logger
-  console.log(`got ${req.method} request at ${req.url} on: ${req.reqTime}`)
+  console.log(`got ${req.method} request at ${req.url} on: ${req.reqTime} From ${req.connection.remoteAddress}`)
   next()
 })
 
