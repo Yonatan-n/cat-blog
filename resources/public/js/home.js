@@ -139,7 +139,7 @@ async function pageButtonHandler (perPage = 15, direction, kind) {
       .then(x => x.json())
       .then(function (x) { window.fetchedCats = x; return 0 })
   }
-  let n = 0
+  let n
   switch (direction) {
     case 'zero':
       n = 0
@@ -154,33 +154,29 @@ async function pageButtonHandler (perPage = 15, direction, kind) {
       n = 0
       break
   }
-  // await console.log(n, await window.fetchedCats.filter(x => func(x)))
   if (!window.state) {
-    window.state = [perPage, kind, 0, window.fetchedCats] /*
-    [0, 1, 2, 3] = [perPage: 15, kind: ['color', 'Tricolor'], pageCnt: 0, currCatList: [{etc...}]]
-    */
-  } else {
-    window.state = [ // length = 5
-      0, // 0 // 15
-      window.state[1], // (eq(kind) !== eq(['null', 'null']) && eq(kind) !== eq(window.state[1])) ? kind : window.state[1], // 1 // ['name', 'Para']
-      window.state[2], // 2  // this += n
-      window.fetchedCats // 3 // [{that thing...}]
-    ] // 4 // func
+    window.state = [perPage, kind, 0, window.fetchedCats]
+    //  [0, 1, 2, 3] = [perPage: 15, kind: ['color', 'Tricolor'], pageCnt: 0, currCatList: [{etc...}]]
   }
+  const nl = eq(['null', 'null'])
+  if (eq(kind) === nl) { window.state[2] += n }
 
-  if (eq(['null', 'null']) === eq(window.state[1]) && eq(kind) !== eq(['null', 'null'])) {
-    window.state[2] = 0
-    window.state[1] = kind
-  } else if (eq(['null', 'null']) !== eq(window.state[1]) && eq(kind) !== eq(['null', 'null'])) {
-    window.state[2] = 0
-    window.state[1] = kind
-  } else if (eq(kind) === ['null', 'null'] && eq(window.state[1]) !== eq(['null', 'null'])) {
-    window.state[1] = window.state[1]
-    window.state[2] += n
-  } else if (false) {
-    console.log('false')
+  if (eq(window.state[1]) === nl) {
+    if (eq(kind) === nl) {
+      console.log('next page, Front page')
+    } else {
+      window.state[1] = kind
+      window.state[2] = 0
+    }
+  } else if (eq(kind) !== eq(window.state[1])) {
+    if (eq(kind) === nl) {
+      console.log('ok next or prev')
+    } else {
+      window.state[1] = kind
+      window.state[2] = 0
+    }
   }
-  let func
+  var func = () => true
   switch (window.state[1][0]) {
     case 'name':
       func = (x) => (new RegExp(`^.*${window.state[1][1]}.*$`, 'm')).test(x[window.state[1][0]])
@@ -192,26 +188,31 @@ async function pageButtonHandler (perPage = 15, direction, kind) {
       func = (x) => cleanString(x[window.state[1][0]]).indexOf(window.state[1][1]) !== -1
       break
     default:
-      func = (!window.state[4]) ? () => true : window.state[4]
+      func = () => true
   }
   window.state[4] = func
-  const newPage = window.state[2] + n
+
   const error = document.getElementById('error')
+  const newPage = window.state[2]
+
   if (newPage < 0) {
+    window.state[2] -= n
     error.innerText = `You're at the begining!`
     return 0
-  } else if (newPage > window.state[3].filter(func).length) {
+  } else if (newPage > window.state[3].filter(window.state[4]).length) {
+    window.state[2] -= n
     error.innerText = `No more cats for now!`
     return 0
   } else {
     error.innerHTML = 'all good'
+    setTimeout(function () { window.scroll({ top: 0, behavior: 'smooth' }) }, 200)
   }
   await clearCatList('#catList')
   await catListToDom('#catList', window.state[4])
-  await console.log('Current Page is ', window.state[2], '\n', func.toSource(), '\n', state)
-  // await setTimeout(window.scroll(0, 0), 300)
+  await console.log(state)
   return 0
 }
+// End of pageButtonHandler
 
 async function catListToDom (to = '#catList', func = (() => true)) {
   const parent = document.querySelector(to)
