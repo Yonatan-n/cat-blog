@@ -1,102 +1,103 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cat Blag</title> 
-  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite" rel="stylesheet">   <link rel="stylesheet" href="css/style.css">
+  <title>Cat Blag</title>
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite" rel="stylesheet">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="import" href="templates/nav.html"> <!-- templates need to be last-->
 </head>
+
 <body>
   <header>
-      <div class="header-nav">
+    <div class="header-nav">
 
-          <div class="container-fluid color-peach p-5 text-white headerFont" id="head-title">
-            <h3 class="text-center" id="page-title">cat blag</h3>
-          </div>
-      
-          <nav class="navbar navbar-expand-sm color-bg" id="nav-bar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link text-white hoverNav" href="home">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-white hoverNav" href="about">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-white hoverNav" href="#cats">Cats</a>
-                  <ul>
-                    <li>
-                      <a href="#">Name</a>
-                      <ul>
-                        <li>
-                          <a href="#1" onclick="newCatList(baseURL + '/api/name/Nemi', '#catList')">Nemi</a>
-                        </li>
-                        <li>
-                            <a href="#2" onclick="newCatList(baseURL + '/api/name/Para', '#catList')">Para</a>
-                        </li>
-                        <li>
-                            <a href="#3" onclick="newCatList(baseURL + '/api/name/Poki', '#catList')">Poki</a>
-                        </li>
-                        <li>
-                            <a href="#3" onclick="newCatList(baseURL + '/api/name/Poki', '#catList')">Poki</a>
-                        </li>
-                        <li>
-                            <a href="#4" onclick="newCatList(baseURL + '/api/name/Elizabeth', '#catList')">Elizabeth</a>
-                        </li>
-                        <li>
-                            <a href="#5" onclick="newCatList(baseURL + '/api/name/Mastick&W', '#catList')">Mastick</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <a href="#">Color</a>
-                      <ul>
-                        <li>
-                            <a href="#1" onclick="newCatList(baseURL + '/api/color/Tricolor', '#catList')">Tricolor</a>
-                        </li>
-                        <li>
-                            <a href="#2" onclick="newCatList(baseURL + '/api/color/Ginger', '#catList')">Ginger</a>
-                        </li>
-                        <li>
-                            <a href="#3" onclick="newCatList(baseURL + '/api/color/Black', '#catList')">Black</a>
-                        </li>
-                        <li>
-                            <a href="#4" onclick="newCatList(baseURL + '/api/color/White', '#catList')">White</a>
-                        </li>
-                        <li>
-                            <a href="#5" onclick="newCatList(baseURL + '/api/color/B&W', '#catList')">Black & White</a>
-                        </li>
-                        <li>
-                            <a href="#6" onclick="newCatList(baseURL + '/api/color/Grey', '#catList')">Grey</a>
-                        </li>
-                        <li>
-                            <a href="#7" onclick="newCatList(baseURL + '/api/color/No Color', '#catList')">No Color</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <a href="#">Tags</a>
-                      <ul>
-                        <li>
-                          <a href="#1" onclick="newCatList(baseURL + '/api/tags/Kitten', '#catList')">Kittens</a>
-                        </li>
-                        <li>
-                            <a href="#2" onclick="newCatList(baseURL + '/api/tags/Fat', '#catList')">Fattys</a>
-                        </li>
-                        <li>
-                            <a href="#3" onclick="newCatList(baseURL + '/api/tags/Dog', '#catList')">Dogs</a>
-                        </li>
-                        <li>
-                            <a href="#4" onclick="newCatList(baseURL + '/api/tags/Special', '#catList')">Special</a>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <!-- <li class="nav-item">
+      <div class="container-fluid color-peach p-5 text-white headerFont" id="head-title">
+        <h3 class="text-center" id="page-title">cat blag</h3>
+      </div>
+
+      <nav class="navbar navbar-expand-sm color-bg" id="nav-bar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link text-white hoverNav" href="home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white hoverNav" href="about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white hoverNav" href="#cats">Cats</a>
+            <ul>
+              <li>
+                <a href="#">Name</a>
+                <ul>
+                  <li>
+                    <a href="#1" onclick="newCatList(baseURL + '/api/name/Nemi', '#catList')">Nemi</a>
+                  </li>
+                  <li>
+                    <a href="#2" onclick="newCatList(baseURL + '/api/name/Para', '#catList')">Para</a>
+                  </li>
+                  <li>
+                    <a href="#3" onclick="newCatList(baseURL + '/api/name/Poki', '#catList')">Poki</a>
+                  </li>
+                  <li>
+                    <a href="#3" onclick="newCatList(baseURL + '/api/name/Poki', '#catList')">Poki</a>
+                  </li>
+                  <li>
+                    <a href="#4" onclick="newCatList(baseURL + '/api/name/Elizabeth', '#catList')">Elizabeth</a>
+                  </li>
+                  <li>
+                    <a href="#5" onclick="newCatList(baseURL + '/api/name/Mastick&W', '#catList')">Mastick</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Color</a>
+                <ul>
+                  <li>
+                    <a href="#1" onclick="newCatList(baseURL + '/api/color/Tricolor', '#catList')">Tricolor</a>
+                  </li>
+                  <li>
+                    <a href="#2" onclick="newCatList(baseURL + '/api/color/Ginger', '#catList')">Ginger</a>
+                  </li>
+                  <li>
+                    <a href="#3" onclick="newCatList(baseURL + '/api/color/Black', '#catList')">Black</a>
+                  </li>
+                  <li>
+                    <a href="#4" onclick="newCatList(baseURL + '/api/color/White', '#catList')">White</a>
+                  </li>
+                  <li>
+                    <a href="#5" onclick="newCatList(baseURL + '/api/color/B&W', '#catList')">Black & White</a>
+                  </li>
+                  <li>
+                    <a href="#6" onclick="newCatList(baseURL + '/api/color/Grey', '#catList')">Grey</a>
+                  </li>
+                  <li>
+                    <a href="#7" onclick="newCatList(baseURL + '/api/color/No Color', '#catList')">No Color</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">Tags</a>
+                <ul>
+                  <li>
+                    <a href="#1" onclick="newCatList(baseURL + '/api/tags/Kitten', '#catList')">Kittens</a>
+                  </li>
+                  <li>
+                    <a href="#2" onclick="newCatList(baseURL + '/api/tags/Fat', '#catList')">Fattys</a>
+                  </li>
+                  <li>
+                    <a href="#3" onclick="newCatList(baseURL + '/api/tags/Dog', '#catList')">Dogs</a>
+                  </li>
+                  <li>
+                    <a href="#4" onclick="newCatList(baseURL + '/api/tags/Special', '#catList')">Special</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
                 <div class="dropdown">
                   <button class="dropbtn"><a class="nav-link">Names</a></button>
                   <div class="dropdown-content">
@@ -133,24 +134,27 @@
                   </div>
                 </div>
                 </li> -->
-            </ul>
-          </nav>
-      </div>
-  </header> <!--must have for the navbar and title template-->
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!--must have for the navbar and title template-->
   <div id='buttonToTop'></div> <!-- must have for the scroll to top button -->
 
-<main class="container-fluid bg-light">
-  <ul id="imgls"></ul>
-</main>
+  <main class="container-fluid bg-light">
+    <ul id="imgls"></ul>
+  </main>
 
-<div class="card-deck-wrapper">
-  <div class="card-deck flex-container" id="catList" style="margin-left:0px; margin-right: 0px;">
-    <div id='tempHere'></div>
+  <div class="card-deck-wrapper">
+    <div class="card-deck flex-container" id="catList" style="margin-left:0px; margin-right: 0px;">
+      <div id='tempHere'></div>
+    </div>
   </div>
-</div>
 
-<!--   <script type="text/javascript" src="js/templates.js"></script>
- --> <!--  <script type="text/javascript" src="js/home.js"></script> -->
+  <!--   <script type="text/javascript" src="js/templates.js"></script>
+ -->
+  <!--  <script type="text/javascript" src="js/home.js"></script> -->
 
 </body>
+
 </html>

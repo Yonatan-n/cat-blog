@@ -21,6 +21,14 @@ function checkValidBoxes (listOf, validOf) {
   })
 }
 
+function cleanString (s) { // cleanString :: String -> Array (Of strings)
+  // '\{\"Tricolor\", \"B&W\"\}' -> ['Tricolor', 'B&@']
+  if (!s) { return [] } // if null -> []
+  return s.split('')
+    .filter(a => /[^({|}|\")]/.test(a))
+    .join('')
+    .split(',')
+}
 /* document.getElementsByName('catName')[0].value = cookie.name // change name to cat name
 document.getElementsByName('catDesc')[0].value = cookie.description // change desc to cat desc
 document.getElementsByName('catId')[0].value = cookie.id
@@ -34,8 +42,8 @@ if (myTags) { // check the cat tags boxes
 document.onload = fetch(`${baseURL}/api/byId/${(document.location.hash).slice(1)}`)
   .then(x => x.json())
   .then(x => {
-    const myColors = x.color
-    const myTags = x.tags
+    const myColors = cleanString(x.color)
+    const myTags = cleanString(x.tags)
     let colorList = document.getElementsByName('catColor') // html node list
     let tagList = document.getElementsByName('catTag') // html node list
 

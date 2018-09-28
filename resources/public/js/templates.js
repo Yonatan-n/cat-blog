@@ -1,4 +1,4 @@
-const baseURL = `${window.location.protocol}//${window.location.host}`
+// const baseURL = `${window.location.protocol}//${window.location.host}`
 
 const tempNavBar1 = `
 <div class="header-nav">

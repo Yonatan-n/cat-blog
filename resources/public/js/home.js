@@ -1,14 +1,9 @@
-/* function makeCatList1 () {
-  const daList = document.getElementById('imgls')
-  catCardTemplate = (x) => `
-    <li class="text-center">cat name: ${x.name}<br/>
-                                      cat desc: ${x.desc}<br/>
-                                      <img src="${x.img}" alt="cat pic" width="100px" height="100px" class="mx-auto d-block">
-                                      </li>`
-  daList.innerHTML = xs.map((x) => catCardTemplate(x))
-    .reduce((a, b) => a + b, '')
-} */
-
+// Global Vars are:
+// window.catNumber // number
+// window.fetchedCats // array of JSON object
+// window.catKind
+// window.state
+const eq = a => JSON.stringify(a)
 function createCatCard (name, desc, imgPath, up_date, theId) {
   // console.log(imgPath)
   let catCard = document.createElement('div')
@@ -80,7 +75,155 @@ function makeCatList3 (url, to) {
         createCatCard(x.name, x.description, x.file_name, x.up_date, x.id))))
 }
 
-function clearCatList (catList) {
+async function makeCatList4 (url = `${baseURL}/api/all`, to = '#catList', func = (() => true)) {
+  const parent = document.querySelector(to)
+  if (!window.catNumber) { window.catNumber = 0 }
+  const lower = window.catNumber
+  if (!window.fetchedCats) {
+    await window.fetch(url)
+      .then(a => a.json())
+      .then(a => { window.fetchedCats = a; return a })
+    /* .then(a => console.log('done')) */
+  }
+  await window.fetchedCats.filter(x => func(x)).slice(0 + lower, 15 + lower).forEach(x =>
+    parent.append(
+      createCatCard(x.name, x.description, x.file_name, x.up_date, x.id)))
+}
+
+function pageButtonHandler0 (n = 0, direction = 'next', options = []) { // make something so that this function will check the state of the page, like check the hash (#) and keep the same cats on next press
+  let amount = 0
+  if (direction === 'next') {
+    amount = n
+  } else if (direction === 'prev') {
+    amount = (-n)
+  } else if (direction === 'zero') {
+    window.catNumber = 0
+  }
+  let error = document.getElementById('error')
+  console.log('pageButtonHandler')
+  if (!window.catKind) { window.catKind = [null, null, window.fetchedCats.length] }
+  if (window.catNumber + amount < 0) {
+    error.innerText = `You're at the start!`
+  } else if (window.catNumber + amount > (window.catKind[2])) {
+    error.innerText = `No More cats 4 now!`
+  } else {
+    window.catNumber += amount
+    error.innerText = ''
+    craftFunctionForList('#catList', window.catKind[0] === null ? options : window.catKind)
+  }
+}
+function craftFunctionForList (to = '#catList', options = [] /*  ['name', 'Para'] */) {
+  let func = () => true
+  if (eq(options) !== eq([]) ||
+    (options[0] !== null && options[1] !== null)) {
+    if (options[0] === 'name') { // function For name
+      func = (x) => (new RegExp(`^.*${options[1]}.*$`, 'm')).test(x[options[0]]) // regex -> /^.*Nemi.*$/m
+    } else { // function for both tag and color
+      func = (x) => cleanString(x[options[0]]).indexOf(options[1]) !== -1
+    }
+  }
+  window.catKind = eq(options) === eq(window.catKind) ? [null, null, null] : options.slice() // does not change options
+  window.catKind[2] = (window.fetchedCats.filter(func).length)
+  // console.log(func.toSource())
+  clearCatList(to)
+  makeCatList4(`${baseURL}/api/all`, '#catList', func)
+}
+
+// main pages handler
+async function pageButtonHandler (perPage = 15, direction, kind) {
+  // perPage -> number of cat's pics per page i.e 15
+  // direction -> 'next', 'prev', 'zero'
+  // kind -> ['name', 'Para'] or ['color', 'Black']
+  if (!window.fetchedCats) {
+    await window.fetch(`${baseURL}/api/all`)
+      .then(x => x.json())
+      .then(function (x) { window.fetchedCats = x; return 0 })
+  }
+  let n = 0
+  switch (direction) {
+    case 'zero':
+      n = 0
+      break
+    case 'next':
+      n = perPage
+      break
+    case 'prev':
+      n = (-perPage)
+      break
+    default:
+      n = 0
+      break
+  }
+  // await console.log(n, await window.fetchedCats.filter(x => func(x)))
+  if (!window.state) {
+    window.state = [perPage, kind, 0, window.fetchedCats] /*
+    [0, 1, 2, 3] = [perPage: 15, kind: ['color', 'Tricolor'], pageCnt: 0, currCatList: [{etc...}]]
+    */
+  } else {
+    window.state = [ // length = 5
+      0, // 0 // 15
+      window.state[1], // (eq(kind) !== eq(['null', 'null']) && eq(kind) !== eq(window.state[1])) ? kind : window.state[1], // 1 // ['name', 'Para']
+      window.state[2], // 2  // this += n
+      window.fetchedCats // 3 // [{that thing...}]
+    ] // 4 // func
+  }
+
+  if (eq(['null', 'null']) === eq(window.state[1]) && eq(kind) !== eq(['null', 'null'])) {
+    window.state[2] = 0
+    window.state[1] = kind
+  } else if (eq(['null', 'null']) !== eq(window.state[1]) && eq(kind) !== eq(['null', 'null'])) {
+    window.state[2] = 0
+    window.state[1] = kind
+  } else if (eq(kind) === ['null', 'null'] && eq(window.state[1]) !== eq(['null', 'null'])) {
+    window.state[1] = window.state[1]
+    window.state[2] += n
+  } else if (false) {
+    console.log('false')
+  }
+  let func
+  switch (window.state[1][0]) {
+    case 'name':
+      func = (x) => (new RegExp(`^.*${window.state[1][1]}.*$`, 'm')).test(x[window.state[1][0]])
+      break
+    case 'color':
+      func = (x) => cleanString(x[window.state[1][0]]).indexOf(window.state[1][1]) !== -1
+      break
+    case 'tags':
+      func = (x) => cleanString(x[window.state[1][0]]).indexOf(window.state[1][1]) !== -1
+      break
+    default:
+      func = (!window.state[4]) ? () => true : window.state[4]
+  }
+  window.state[4] = func
+  const newPage = window.state[2] + n
+  const error = document.getElementById('error')
+  if (newPage < 0) {
+    error.innerText = `You're at the begining!`
+    return 0
+  } else if (newPage > window.state[3].filter(func).length) {
+    error.innerText = `No more cats for now!`
+    return 0
+  } else {
+    error.innerHTML = 'all good'
+  }
+  await clearCatList('#catList')
+  await catListToDom('#catList', window.state[4])
+  await console.log('Current Page is ', window.state[2], '\n', func.toSource(), '\n', state)
+  // await setTimeout(window.scroll(0, 0), 300)
+  return 0
+}
+
+async function catListToDom (to = '#catList', func = (() => true)) {
+  const parent = document.querySelector(to)
+  const low = window.state[2]
+  window.state[3]
+    .filter(func).slice(0 + low, 15 + low)
+    .forEach(x =>
+      parent.append(
+        createCatCard(x.name, x.description, x.file_name, x.up_date, x.id)))
+}
+
+function clearCatList (catList = '#catList') {
   const list = document.querySelector(catList)
   while (list.hasChildNodes()) {
     list.removeChild(list.firstChild)
@@ -113,15 +256,34 @@ function buttonEditHandler () {
   const catId = nodeList.childNodes[5].innerText
   window.location = `${baseURL}/edit#${catId}`
 }
+
 function buttonDeleteHandler () {
   const nodeList = this.parentElement.parentElement
   const catId = nodeList.childNodes[5].innerText
   window.location = `${baseURL}/delete#${catId}`
 }
 
-const baseURL = `${window.location.protocol}//${window.location.host}`
-window.onload = makeCatList3(`${baseURL}/api/all`, '#catList')
+function cleanString (s) { // cleanString :: String -> Array (Of strings)
+  // '\{\"Tricolor\", \"B&W\"\}' -> ['Tricolor', 'B&@']
+  if (!s) { return [] } // if null -> []
+  return s.split('')
+    .filter(a => /[^({|}|\")]/.test(a))
+    .join('')
+    .split(',')
+}
 
+function nextCats () {
+  clearCatList('#catList')
+  makeCatList4('', '#catList')
+  window.setTimeout(() => window.scroll({ top: 0, behavior: 'smooth' }), 1500)
+}
+
+const baseURL = `${window.location.protocol}//${window.location.host}`
+/* window.onload = async function () {
+  await makeCatList4(`${baseURL}/api/all`, '#catList')
+  // await pageButtonHandler(`${baseURL}/api/all`, 'zero', null)
+} */
+window.onload = pageButtonHandler(15, 'zero', ['null', 'null'])
 // 'listen to change of url, if the #1 part is #edit, toggle the buttons'
 window.onpopstate = function (x) {
   if (this.document.location.hash === '#edit') {

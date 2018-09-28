@@ -85,6 +85,16 @@ app.get('/api/all', (req, res) =>
   pool.query(`SELECT * FROM cat_table_s3 ORDER BY up_date DESC`, (err, result) => {
     if (err) throw err
     res.send(result.rows)
+    /* if (x.tags === null) {
+        x.tags = []
+      } */
+    /* x.arr = x.arr.map(x => x.replace(/[^0-9a-zA-z]/gi)) */
+  }))
+
+app.get('/api/limit/:num', (req, res) =>
+  pool.query(`SELECT * FROM cat_table_s3 ORDER BY up_date DESC LIMIT 10 OFFSET $1`, [req.params.num], (err, result) => {
+    if (err) throw err
+    res.send(result.rows)
   }))
 
 /* app.get('/api/delete/:id', (req, res) => {

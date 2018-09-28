@@ -1,46 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cat Blag</title> 
-  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite" rel="stylesheet">   <link rel="stylesheet" href="css/style.css">
+  <title>Cat Blag</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="import" href="templates/nav.html"> <!-- templates need to be last-->
 </head>
+
 <body>
-  <header></header> <!--must have for the navbar and title template-->
+  <header></header>
+  <!--must have for the navbar and title template-->
   <div id='buttonToTop'></div>
 
   <main class="container-fluid bg-light">
     <ul id="imgls">
     </ul>
   </main>
-<div class="card-deck-wrapper">
-  <div class="card-deck flex-container" id="catList" style="margin-left:0px; margin-right: 0px;"> <!-- max-width: 45em; -->
-    <div id='tempHere'>
-      
+  <div class="card-deck-wrapper">
+    <div class="card-deck flex-container" style="margin-left:auto; margin-right: auto; max-width: 31em; align-">
+      <!-- max-width: 45em; -->
+      <div id='catList'></div>
+      <div id='pager' style="margin: auto auto auto auto;">
+        <ul class="pager" style="color: #f29e91;">
+          <li><a href='#pager' onclick='pageButtonHandler(15, "prev", ["null", "null"])'>Previous</a></li>
+          <li><a href="#pager" onclick='pageButtonHandler(15, "next", ["null","null"])'>Next</a></li>
+        </ul>
+        <div id="error"></div>
+      </div>
     </div>
   </div>
-</div>
-
-<template id="cardTemp">
-  <div class="card">
-    <div class="card-body">
-      <img src="images/cat1.jpg" alt="cat pic" class="card-img-top d-block" id="catPic">
-      <h5 class="card-text text-center" id="cat-name">Cat Name</h5>
-      <p class="card-text" id="cat-desc">Cat Description</p>
-    </div>
-  </div>
-</template>
 
   <script type="text/javascript" src="js/homeTemplates.js"></script>
   <script type="text/javascript" src="js/home.js"></script>
-
-  <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js'></script>-->
-  <!--script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js'></script-->
-  <!--<script src="js/index.js"></script>-->
-
 </body>
+
 </html>
