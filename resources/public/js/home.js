@@ -204,7 +204,8 @@ async function pageButtonHandler (perPage = 15, direction, kind) {
     error.innerText = `No more cats for now!`
     return 0
   } else {
-    error.innerHTML = 'all good'
+    error.innerText = ''
+    error.innerHTML = `<img src="./pinkCat2.png" alt="cute kitty" class="catPageIcon">`
     setTimeout(function () { window.scroll({ top: 0, behavior: 'smooth' }) }, 200)
   }
   await clearCatList('#catList')
