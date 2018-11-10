@@ -17,6 +17,10 @@
     <div class="form-group mx-auto text-center">  
       <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
     </div>
+    <div class="custom-file form-group">
+      <!--<label for="catPic" class="custom-file-label">Choose a cat image</label> -->
+      <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;">
+    </div>
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div class="form-group jumbotron">
         <h5>Cat Name</h5>
@@ -33,10 +37,7 @@ How cool was it?
 Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
       </div>
       
-        <div class="custom-file form-group">
-<!--           <label for="catPic" class="custom-file-label">Choose a cat image</label> -->
-          <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;">
-        </div>
+        
        <!--  <input id="uploadFile" placeholder="Choose File" disabled="disabled" hidden/>
         <div class="fileUpload btn btn-secondary">
             <span>Upload</span>
