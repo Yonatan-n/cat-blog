@@ -19,7 +19,7 @@
     </div>
     <div class="custom-file form-group">
       <!--<label for="catPic" class="custom-file-label">Choose a cat image</label> -->
-      <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;">
+      <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;" onchange="gotImgHere(event)">
     </div>
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div class="form-group jumbotron">
