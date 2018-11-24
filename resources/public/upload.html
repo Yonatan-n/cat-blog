@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,14 +15,16 @@
   <div id='buttonToTop'></div>
 
   <main class="container-fluid bg-light">
-    <div class="form-group mx-auto text-center">  
+    <div class="form-group mx-auto text-center">
       <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
     </div>
-    <div class="">
-      <!--<label for="catPic" class="custom-file-label">Choose a cat image</label> -->
-      <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;" onchange="gotImgHere(event)">
-    </div>
+
     <form action="/upload" method="POST" enctype="multipart/form-data">
+      <div class="form-group jumbotron">
+          <h5>Cat Picture</h5>
+        <hr class="my-4">
+          <input type="file" name="catPic" class="" style="padding: 2.2em 0 0;" onchange="gotImgHere(event)">
+        </div>
       <div class="form-group jumbotron">
         <h5>Cat Name</h5>
         <hr class="my-4">
@@ -30,63 +33,63 @@
       <div class="form-group jumbotron">
         <h5>Cat Description</h5>
         <hr class="my-4">
-        <textarea rows="8" cols="80" placeholder=
-"Where did you find this cat?
+        <textarea rows="8" cols="80" placeholder="Where did you find this cat?
 What did it smell like?
 How cool was it?
-Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
+Does this cat like lasagna?"
+          class="form-control" name="catDesc"></textarea>
       </div>
-      
-        
-       <!--  <input id="uploadFile" placeholder="Choose File" disabled="disabled" hidden/>
+
+
+      <!--  <input id="uploadFile" placeholder="Choose File" disabled="disabled" hidden/>
         <div class="fileUpload btn btn-secondary">
             <span>Upload</span>
             <input name="catPic" id="uploadBtn" type="file" class="upload"/>
         </div> -->
-        <div class="form group jumbotron">
-          <h5>Choose a color for the cat</h5>
-          <hr class="my-4">
-          <div class="checkbox">
-            <label><input type="checkbox" name="catColor" value="Tricolor">Tricolor</label>
-          </div>
-          <div class="checkbox">
-            <label><input type="checkbox" name="catColor" value="Black">Black</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="White">white</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="B&W">Black &amp; white</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="Ginger">Ginger</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="Grey">Grey</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="No Color">No Color</label>
-          </div>
+      <div class="form group jumbotron">
+        <h5>Choose a color for the cat</h5>
+        <hr class="my-4">
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Tricolor">Tricolor</label>
         </div>
-        
-        <!--end of color, start of tag-->
-        <div class="form group jumbotron">
-            <h5>Choose some tags for the cat</h5>
-            <hr class="my-4">
-            <div class="checkbox">
-              <label><input type="checkbox" name="catTag" value="Fat">Fat</label>
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" name="catTag" value="Kitten">Kitten</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="catTag" value="Dog?!">Dog?!</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="catTag" value="Special Breed">Special Breed</label>
-            </div>
-          </div>
-        <!--<div class="form-group">
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Black">Black</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="White">white</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="B&W">Black &amp; white</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Ginger">Ginger</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Grey">Grey</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="No Color">No Color</label>
+        </div>
+      </div>
+
+      <!--end of color, start of tag-->
+      <div class="form group jumbotron">
+        <h5>Choose some tags for the cat</h5>
+        <hr class="my-4">
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Fat">Fat</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Kitten">Kitten</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Dog?!">Dog?!</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Special Breed">Special Breed</label>
+        </div>
+      </div>
+      <!--<div class="form-group">
                 <select class="custom-select" required>
                   <option value="0">Tricolor</option>
                   <option value="1">Black</option>
@@ -96,15 +99,15 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
                   <option value="5">Unique</option>
                 </select>
         </div>-->
-        <div class="form-group jumbotron">
-          <h5>Super secret password</h5>
-          <hr class="my-4">
-          <input type="password" name="password" id="pass">
-        </div>
-        <div class="form-group mx-auto text-center">  
-          <button type="submit" class="btn btn-secondary">Send The Form</button>
-        </div>
-        
+      <div class="form-group jumbotron">
+        <h5>Super secret password</h5>
+        <hr class="my-4">
+        <input type="password" name="password" id="pass">
+      </div>
+      <div class="form-group mx-auto text-center">
+        <button type="submit" class="btn btn-secondary">Send The Form</button>
+      </div>
+
       </div>
     </form>
   </main>
@@ -113,4 +116,5 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
   <script type="text/javascript" src="js/init.js"></script>
   <script type="text/javascript" src="js/upload.js"></script>
 </body>
+
 </html>

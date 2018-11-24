@@ -8,16 +8,15 @@ function gotImgHere (event) {
   console.log(event)
   let parent = event.target.parentElement
   let picElem = document.createElement('div')
-  picElem.classList.add('jumbotron')
   /* picElem.style.maxWidth = '100%'
   picElem.style.maxHeight = '100%' */
   reader.onload = function (event2) {
     picElem.innerHTML = `
       <img src='${event2.target.result}' class='center' style="max-width: 100%; max-height: 100%;">`
-    if (parent.childElementCount === 1) {
+    if (parent.childElementCount === 3) {
       parent.appendChild(picElem)
     } else {
-      parent.children[1].children[0].src = event2.target.result
+      parent.children[3].children[0].src = event2.target.result
     }
     // event.target.parentElement.appendChild(picElem)
     // console.log(event.target)
