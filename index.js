@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000
 // Heroku Postgresql
 const { Pool } = require('pg')
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgres://vrfxhodtqyfprc:36b401c890699b83a74f92c4cebd21c29de6dbcbaac7fbab0865ee2b9bafcd4c@ec2-50-16-196-57.compute-1.amazonaws.com:5432/d6v73t2rti2ka',
+  connectionString: process.env.DATABASE_URL,
   ssl: true
 })
 pool.on('error', (err, client) => {
