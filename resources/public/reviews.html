@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Cat Blag</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite|Handlee|Merriweather+Sans:700i" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header></header>
+  <div id='buttonToTop'></div>
+  <div id='buttonToComment'></div>
+
+
+  <main class="container-fluid">
+    <div id='commentList'></div>
+      <div class="commentInput hideCommentForm" id="outerModal" onclick="handleModal(event)">
+        <form action="/reviews" method="POST" enctype="application/x-www-form-urlencoded" class="bg-light container-fluid commentForm"
+          id="commentForm" style="padding-top: 1em;">
+
+          <button type="button" class="close" aria-label="Close" onclick="handleCommentForm(event)" style="font-size: 2em;width: 1em; justify-self: left;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="form-group jumbotron">
+            <h6>My Name:</h6>
+            <input name="catName" type="text" placeholder="catLover55" class="form-control">
+          </div>
+          <div class="form-group jumbotron">
+            <h6>My Thoughts:</h6>
+            <textarea rows="4" cols="80" placeholder="This is the best web site I ever seen!
+How can This day get any better?"
+              class="form-control" name="catDesc"></textarea>
+          </div>
+          <div class="form-group mx-auto text-center" style="padding-bottom: 1em;">
+            <button type="submit" class="btn btn-secondary" onsubmit="submitForm(event)">Send Comment</button>
+          </div>
+        </form>
+      </div>
+
+  </main>
+
+  <script type="text/javascript" src="js/templates.js"></script>
+  <script type="text/javascript" src="js/init.js"></script>
+  <script type="text/javascript" src="js/reviews.js"></script>
+</body>
+
+</html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Cat Blag</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite" rel="stylesheet">   <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px|Special+Elite" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <!--<link rel="import" href="templates/nav.html">-->
 </head>
 
@@ -13,76 +15,80 @@
   <header></header>
   <div id='buttonToTop'></div>
   <main class="container-fluid bg-light">
-    <div class="form-group mx-auto text-center">  
+    <div class="form-group mx-auto text-center">
       <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear Form</button>
     </div>
     <form action="/edit" method="POST" enctype="application/x-www-form-urlencoded">
       <div class="form-group jumbotron">
         <h5>Cat Name</h5>
         <hr class="my-4">
-        <input name="catName" type="text" placeholder="Poki | Mastick | Elizabeth | Nemi | Para" class="form-control" id='catName'>
+        <input name="catName" type="text" placeholder="Poki | Mastick | Elizabeth | Nemi | Para" class="form-control"
+          id='catName'>
       </div>
       <div class="form-group jumbotron">
         <h5>Cat Description</h5>
         <hr class="my-4">
-        <textarea rows="8" cols="80" placeholder=
-"Where did you find this cat?
+        <textarea rows="8" cols="80" placeholder="Where did you find this cat?
 What did it smell like?
 How cool was it?
-Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
+Does this cat like lasagna?"
+          class="form-control" name="catDesc"></textarea>
       </div>
-        <div class="form group jumbotron">
-          <h5>Choose a color for the cat</h5>
-          <hr class="my-4">
-          <div class="checkbox">
-            <label><input type="checkbox" name="catColor" value="Tricolor">Tricolor</label>
-          </div>
-          <div class="checkbox">
-            <label><input type="checkbox" name="catColor" value="Black">Black</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="White">white</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="B&W">Black &amp; white</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="Ginger">Ginger</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="Grey">Grey</label>
-          </div>
-          <div class="checkbox">
-              <label><input type="checkbox" name="catColor" value="No Color">No Color</label>
-          </div>
+      <div class="form group jumbotron">
+        <h5>Choose a color for the cat</h5>
+        <hr class="my-4">
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Tricolor">Tricolor</label>
         </div>
-        
-        <!--end of color, start of tag-->
-        <div class="form group jumbotron">
-            <h5>Choose some tags for the cat</h5>
-            <hr class="my-4">
-            <div class="checkbox">
-              <label><input type="checkbox" name="catTag" value="Fat">Fat</label>
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" name="catTag" value="Kitten">Kitten</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="catTag" value="Dog?!">Dog?!</label>
-            </div>
-            <div class="checkbox">
-                <label><input type="checkbox" name="catTag" value="Special Breed">Special Breed</label>
-            </div>
-          </div>
-        <div class="form-group jumbotron">
-          <h5>Super secret password</h5>
-          <hr class="my-4">
-          <input type="password" name="password" id="pass">
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Black">Black</label>
         </div>
-        <input type="hidden" name="catId">
-        <div class="form-group mx-auto text-center">  
-          <button type="submit" class="btn btn-secondary">Send The Form</button>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="White">white</label>
         </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="B&W">Black &amp; white</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Ginger">Ginger</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="Grey">Grey</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catColor" value="No Color">No Color</label>
+        </div>
+      </div>
+
+      <!--end of color, start of tag-->
+      <div class="form group jumbotron">
+        <h5>Choose some tags for the cat</h5>
+        <hr class="my-4">
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Fat">Fat</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Kitten">Kitten</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Dog?!">Dog?!</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="Special Breed">Special Breed</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="catTag" value="CatsWithHats">Cats With Hats</label>
+        </div>
+      </div>
+      <div class="form-group jumbotron">
+        <h5>Super secret password</h5>
+        <hr class="my-4">
+        <input type="password" name="password" id="pass">
+      </div>
+      <input type="hidden" name="catId">
+      <div class="form-group mx-auto text-center">
+        <button type="submit" class="btn btn-secondary">Send The Form</button>
+      </div>
       </div>
     </form>
   </main>
@@ -90,4 +96,5 @@ Does this cat like lasagna?" class="form-control" name="catDesc"></textarea>
   <script type="text/javascript" src="js/templates.js"></script>
   <script src="js/edit.js"></script>
 </body>
+
 </html>

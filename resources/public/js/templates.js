@@ -73,6 +73,9 @@ const tempNavBar = `
                 <li class="nav-item">
                   <a class="nav-link text-white hoverNav" href="/about">About</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white hoverNav" href="/reviews">Reviews</a>
+                </li>
             </ul>
           </nav>
       </div>`
@@ -82,7 +85,7 @@ window.onload = (function () {
   document.querySelector('#buttonToTop').innerHTML = buttonTemp
 })()
 
-window.onscroll = function () { scrollFunction() }
+window.onscroll = scrollFunction
 
 function scrollFunction () {
   document.getElementById('toTopButton').style.display = (

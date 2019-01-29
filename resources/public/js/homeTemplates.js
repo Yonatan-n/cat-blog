@@ -19,6 +19,9 @@ const tempNavBar = `
                   <a class="nav-link text-white hoverNav" href="about">About</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link text-white hoverNav" href="reviews">Reviews</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link text-white hoverNav" href="#cats">Cats</a>
                   <ul>
                     <li>
@@ -80,7 +83,10 @@ const tempNavBar = `
                             <a href="#3" onclick="pageButtonHandler(0,'zero', ['tags', 'Dog?!'])">Dogs</a>
                         </li>
                         <li>
-                            <a href="#4" onclick="pageButtonHandler(0,'zero', ['tags', 'Special'])">Special</a>
+                            <a href="#4" onclick="pageButtonHandler(0,'zero', ['tags', 'Special'])">Special Breed</a>
+                        </li>
+                        <li>
+                            <a href="#5" onclick="pageButtonHandler(0,'zero', ['tags', 'CatsWithHats'])">Cats With Hats</a>
                         </li>
                       </ul>
                     </li>

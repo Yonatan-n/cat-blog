@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 5000
 // Heroku Postgresql
 const { Pool } = require('pg')
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL, // || 'postgres://vrfxhodtqyfprc:36b401c890699b83a74f92c4cebd21c29de6dbcbaac7fbab0865ee2b9bafcd4c@ec2-50-16-196-57.compute-1.amazonaws.com:5432/d6v73t2rti2ka',
   ssl: true
 })
 pool.on('error', (err, client) => {
@@ -33,7 +33,7 @@ pool.on('error', (err, client) => {
 const pathToPublic = `${__dirname}/resources/public`
 const password = process.env.formPassword
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var jsonParser = bodyParser.json()
+// var jsonParser = bodyParser.json() // not used
 app.use(cookieParser())
 
 app.use(express.static(pathToPublic))
@@ -73,6 +73,8 @@ app.get('/edit', (req, res) => // update
 app.get('/delete', (req, res) =>
   res.sendFile(path.join(pathToPublic, 'delete.html')))
 
+app.get('/reviews', (req, res) =>
+  res.sendFile(path.join(pathToPublic, 'reviews.html')))
 // api stuff
 app.get('/api/img1/:name', (req, res) => // old
   res.sendFile(path.join(__dirname, '/resources/public/images', req.params.name)))
@@ -85,10 +87,6 @@ app.get('/api/all', (req, res) =>
   pool.query(`SELECT * FROM cat_table_s3 ORDER BY up_date DESC`, (err, result) => {
     if (err) throw err
     res.send(result.rows)
-    /* if (x.tags === null) {
-        x.tags = []
-      } */
-    /* x.arr = x.arr.map(x => x.replace(/[^0-9a-zA-z]/gi)) */
   }))
 
 app.get('/api/limit/:num', (req, res) =>
@@ -96,18 +94,6 @@ app.get('/api/limit/:num', (req, res) =>
     if (err) throw err
     res.send(result.rows)
   }))
-
-/* app.get('/api/delete/:id', (req, res) => {
-  console.log(req.params.password)
-  if (req.params.password != password) {
-    res.sendFile(path.join(pathToPublic, 'wrongPass.html'))
-  } else {
-    pool.query('DELETE FROM cat_table_s3 WHERE id = $1', [req.params.id], (err, result) => {
-      if (err) throw err
-      res.redirect('/home')
-    })
-  }
-}) */
 
 app.get('/api/color/:color', (req, res) => {
   const colorList = ['Tricolor', 'Ginger', 'Black', 'White', 'B&W', 'Grey', 'No Color'] // color options
@@ -195,7 +181,12 @@ app.get('/api/s3Ls', (req, res) => {
     console.log(`all good s3 mann\n${JSON.stringify(data.Contents[4].Key)}`)
   })
 })
-
+app.get('/api/reviews', (req, res) => {
+  pool.query('SELECT * FROM cat_comments ORDER BY id DESC', (err, result) => {
+    if (err) throw err
+    res.send(result.rows)
+  })
+})
 const makeDateStr = (d) => `${d.toDateString().replace(/ /g, '-')}-${(d.toTimeString()).slice(0, 8)}`
 // makeDateStr :: Date -> String
 // looks like this -> 'Thu-Aug-30-2018-11:40:08'
@@ -216,7 +207,7 @@ var upload = multer({
         cb(null, `cat-blag-s3/${file.fieldname}-${makeDateStr(req.reqTime)}${makeExt(file.originalname)}`)
       },
       transform: function (req, file, cb) {
-        cb(null, sharp().resize(500).jpeg())
+        cb(null, sharp().rotate().resize(500).jpeg())
       }
     }],
     metadata: function (req, file, cb) {
@@ -281,6 +272,14 @@ app.post('/delete', urlencodedParser, (req, res) => {
   pool.query('DELETE FROM cat_table_s3 WHERE id = $1', [cat.id], (err, result) => {
     if (err) throw err
     res.redirect('/home')
+  })
+})
+app.post('/reviews', urlencodedParser, (req, res) => {
+  const { catName, catDesc } = req.body
+  console.log(catName, catDesc)
+  pool.query('INSERT INTO cat_comments (name, comment) VALUES($1, $2)', [catName, catDesc], (err, result) => {
+    if (err) throw err
+    res.redirect('/reviews')
   })
 })
 
